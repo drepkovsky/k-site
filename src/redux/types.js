@@ -1,0 +1,3 @@
+export const SET_NAVBAR_LINKS = "SET_NAVBAR_LINKS";
+export const SET_NAVBAR_HEIGHT = "SET_NAVBAR_HEIGHT";
+export const SET_FORM_VALUE = "SET_FORM_VALUE";
