@@ -11,6 +11,7 @@ for subdir, dirs, files in os.walk(directory):
             path = os.path.join(subdir, file)
             relPath = path.replace(directory, ".").replace("\\", "/")
             current = file.rstrip(".jsx")
+            relPath = relPath.rstrip(".jsx")
             imports.append(current)
             index.write('import %s from "%s";\n' % (current, relPath))
 

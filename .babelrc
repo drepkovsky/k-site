@@ -4,5 +4,5 @@
     "@babel/preset-react"
 ],
 "plugins": ["@babel/plugin-proposal-class-properties"],
-"ignore":["**/*.test.js"]
+"ignore":["**/*.test.js","**/*.map.css","**/*.py,","**/*.scss","**/*.sass"]
 }

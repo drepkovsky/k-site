@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "KSite is a library.",
   "main": "index.js",
   "repository": {
@@ -26,12 +26,9 @@
     "bootstrap": "^4.5.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "clean": "del /q dist",
-    "prepare-build": "npm run clean && babel src --out-dir dist --ignore 'lib/**/*.test.js'",
-    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist",
+    "clean": "del /s /q dist",
+    "prepare-build": "npm run clean && babel src --out-dir dist --ignore '**/*.test.js' ",
+    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist && cd src && npx copyfiles \"./**/*.css\" ../dist && cd ..",
     "build": "npm run prepare-build && npm run copy"
   },
   "eslintConfig": {
@@ -54,25 +51,25 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bootstrap": "^4.5.3",
     "copyfiles": "^2.4.1",
     "react": "^17.0.1",
+    "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4",
+    "reactstrap": "^8.8.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "bootstrap": "^4.5.3",
-    "react-datepicker": "^3.3.0",
-    "react-redux": "^7.2.2",
-    "reactstrap": "^8.8.1",
-    "sass": "^1.30.0"
+    "sass": "^1.30.0",
+    "web-vitals": "^0.2.4"
   },
   "directories": {
     "example": "example"
