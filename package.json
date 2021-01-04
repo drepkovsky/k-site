@@ -1,14 +1,14 @@
 {
-  "name": "k-site",
+  "name": "@drepkovsky/k-site",
   "version": "1.0.0",
   "description": "KSite is a library.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/drepkovsky/k-site.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "inkontext",
@@ -21,5 +21,60 @@
   "bugs": {
     "url": "https://github.com/drepkovsky/k-site/issues"
   },
-  "homepage": "https://github.com/drepkovsky/k-site#readme"
+  "homepage": "https://github.com/drepkovsky/k-site#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "clean": "del /q dist",
+    "prepare-build": "npm run clean && babel src --out-dir dist --ignore 'lib/**/*.test.js'",
+    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist",
+    "build": "npm run prepare-build && npm run copy"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "copyfiles": "^2.4.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "web-vitals": "^0.2.4",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "bootstrap": "^4.5.3",
+    "react-datepicker": "^3.3.0",
+    "react-redux": "^7.2.2",
+    "reactstrap": "^8.8.1",
+    "sass": "^1.30.0"
+  },
+  "directories": {
+    "example": "example"
+  }
 }
