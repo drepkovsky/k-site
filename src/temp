@@ -1,7 +1,0 @@
-form result template
-{
-    name: name,
-    datefrom: date,
-    json:json"
-
-}

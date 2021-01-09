@@ -1,0 +1,177 @@
+@use "../variables";
+.k-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid;
+  border-radius: 5px;
+
+  .no-border {
+    border-bottom: none;
+    border-top: none;
+  }
+
+  .k-table {
+    tr {
+      td,
+      th {
+        &:first-child {
+          padding-left: 1.5rem;
+        }
+        &:last-child {
+          padding-right: 1.5rem;
+        }
+      }
+    }
+  }
+}
+.k-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.5rem 1.5rem;
+  background: none;
+  border-bottom: 1px solid;
+}
+.k-card-body {
+  flex: 1 1 auto;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.k-card-footer {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.5rem 1.5rem;
+  background: none;
+  border-top: 1px solid;
+}
+.k-card-title {
+  font-size: 1.125rem;
+  line-height: 1.2;
+  font-weight: $font-weight-normal;
+  margin: 0;
+}
+
+.k-card-floater {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+}
+
+.k-image {
+  width: 100%;
+}
+
+.k-table-holder {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.k-table {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  vertical-align: middle;
+  text-align: start;
+
+  thead {
+    th {
+      border-top: 0;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+
+      vertical-align: bottom;
+      border-bottom: 1px solid #dee2e6;
+
+      color: #9aa0ac;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+    }
+  }
+  tr {
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  tr {
+    &:first-child {
+      th {
+        border-top: 0;
+      }
+    }
+  }
+
+  &.k-table-striped {
+    tbody {
+      tr {
+        &:nth-of-type(odd) {
+          background: transparent;
+        }
+        &:nth-of-type(2n) {
+          background: rgba(0, 0, 0, 0.02);
+        }
+      }
+    }
+  }
+  td,
+  th {
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+  }
+}
+
+[theme="dark"] {
+  .k-card {
+    background-color: theme-color-level(theme-bg, 10);
+  }
+  .k-card-header,
+  .k-card-footer,
+  .k-card {
+    border-color: theme-color(card-borders-dark);
+    border-bottom-color: theme-color(card-borders-dark);
+    border-top-color: theme-color(card-borders-dark);
+  }
+
+  .k-table {
+    thead {
+      th {
+        color: theme-color(table-head-dark);
+      }
+    }
+  }
+}
+
+[theme="light"] {
+  .k-card {
+    background-color: theme-color-level(theme-bg, -5);
+  }
+  .k-card-header,
+  .k-card-footer,
+  .k-card {
+    border-color: theme-color(card-borders);
+    border-bottom-color: theme-color(card-borders);
+    border-top-color: theme-color(card-borders);
+  }
+
+  .k-table {
+    thead {
+      th {
+        color: theme-color(table-head);
+      }
+    }
+  }
+}

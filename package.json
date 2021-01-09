@@ -27,8 +27,8 @@
   },
   "scripts": {
     "clean": "del /s /q dist",
-    "prepare-build": "npm run clean && babel src --out-dir dist --ignore '**/*.test.js' ",
-    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist && cd src && npx copyfiles \"./**/*.css\" ../dist && cd ..",
+    "prepare-build": "npm run clean && babel demo/src/KSite --out-dir dist --ignore '**/*.test.js' ",
+    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist &&  && npx copyfiles \"demo/src/KSite/**/*.css\" ./dist ",
     "build": "npm run prepare-build && npm run copy"
   },
   "eslintConfig": {

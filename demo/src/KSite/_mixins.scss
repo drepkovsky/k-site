@@ -1,0 +1,63 @@
+$blur-glass-reps: 10;
+$radius-reps: 10;
+$elevate-reps: 10;
+
+@mixin blur-x {
+  @for $i from 1 through $blur-glass-reps {
+    .blur-#{$i} {
+      backdrop-filter: blur($i * 2 + px);
+    }
+  }
+}
+
+@mixin glass-frost-x-y {
+  @for $i from 1 through $blur-glass-reps {
+    @for $j from 1 through 9 {
+      .glass-frost-#{$i}-#{$j} {
+        backdrop-filter: blur($i * 2 + px);
+        background-color: rgba(white, $j / 10);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+}
+
+@mixin radius-x {
+  @for $i from 1 through $radius-reps {
+    .radius-#{$i} {
+      border-radius: $i * 2 + px !important;
+    }
+  }
+}
+@mixin elevate-x-y {
+  @for $i from 1 through $elevate-reps {
+    @for $j from 1 through 5 {
+      .elevate-#{$i}-#{$j} {
+        box-shadow: 0 0 10px $i * 2px rgba(0, 0, 0, $j / 10);
+      }
+    }
+  }
+}
+
+@mixin elevate-x-y {
+  @for $i from 1 through $elevate-reps {
+    @for $j from 1 through 5 {
+      .elevate-#{$i}-#{$j} {
+        box-shadow: 0 0 10px $i * 2px rgba(0, 0, 0, $j / 10);
+      }
+    }
+  }
+}
+@mixin border-x {
+  @each $key, $value in $theme-colors {
+    .border-#{$key} {
+      border-color: map-get($theme-colors, $key);
+    }
+  }
+}
+
+@include blur-x();
+@include radius-x();
+@include elevate-x-y();
+@include glass-frost-x-y();
+@include border-x();

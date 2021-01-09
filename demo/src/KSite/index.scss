@@ -1,0 +1,12 @@
+//import the fun part
+@import "variables";
+@import "mixins";
+
+@import "./../../node_modules/bootstrap/scss/bootstrap";
+
+@import "Main/ksite";
+@import "Navbar/knavbar";
+@import "Header/kheader";
+@import "Gallery/kgallery";
+@import "Forms/kforms";
+@import "Atoms/katoms";
