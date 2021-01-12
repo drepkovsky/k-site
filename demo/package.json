@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@mdi/js": "^5.8.55",
     "@mdi/react": "^1.4.0",
     "@testing-library/jest-dom": "^5.11.8",

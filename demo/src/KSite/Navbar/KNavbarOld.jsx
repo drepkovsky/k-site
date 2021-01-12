@@ -30,8 +30,8 @@ import KIcon from "../Atoms/KIcon";
 
 ////// COMPONENT //////
 const Icon = ({ isCollapsed, className, dark }) => {
-  if (isCollapsed) return <KIcon icon={mdiMenu} className={className} />;
-  return <KIcon icon={mdiMenuOpen} className={className} />;
+  if (isCollapsed) return <KIcon size={1.2} prefix="fa" name={"bars"} />;
+  return <KIcon size={1.2} prefix="fa" name={"times"} />;
 };
 
 class KNavbarOld extends React.Component {
@@ -115,28 +115,28 @@ class KNavbarOld extends React.Component {
         light={light}
         color={color}
         tag={"header"}>
-        <Nav className="container-lg">
-          <NavbarBrand className={` k-navbar-brand ${extendClass}`} href="/">
-            {brandTitle}
-          </NavbarBrand>
-          <NavbarToggler
-            onClick={this.toggleCollapse}
-            className="navbar-toggler p-0">
-            <Icon
-              isCollapsed={this.state.isCollapsed}
-              className="navbar-toggler-icon"
-            />
-          </NavbarToggler>
-          <Collapse
-            className={` ${collapseClassName}`}
-            isOpen={!this.state.isCollapsed}
-            navbar>
+        <NavbarBrand className={` k-navbar-brand ${extendClass}`} href="/">
+          {brandTitle}
+        </NavbarBrand>
+        <NavbarToggler
+          onClick={this.toggleCollapse}
+          className="navbar-toggler p-0">
+          <Icon
+            isCollapsed={this.state.isCollapsed}
+            className="navbar-toggler-icon"
+          />
+        </NavbarToggler>
+        <Collapse
+          className={` ${collapseClassName}`}
+          isOpen={!this.state.isCollapsed}
+          navbar>
+          <Nav className="">
             {items.map((item, index) => {
               return <NavItem key={index}>{item}</NavItem>;
             })}
             {this.renderNavLink(this.state.linkStructure)}
-          </Collapse>
-        </Nav>
+          </Nav>
+        </Collapse>
       </Navbar>
     );
   }

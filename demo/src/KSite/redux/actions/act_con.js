@@ -6,6 +6,7 @@ export const setNavbarLinks = (navLinks) => (dispatch, getState) => {
     payload: navLinks,
   });
 };
+
 export const setNavbarHeight = (height) => (dispatch, getState) => {
   dispatch({
     type: SET_NAVBAR_HEIGHT,

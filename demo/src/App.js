@@ -12,14 +12,20 @@ import {
   KCardFooter,
   KIcon,
   KTable,
+  KTableHead,
+  KTableRow,
+  KTableBody,
+  KTableItem,
+  KSection,
+  KNavbarOld,
 } from "./KSite";
 
-import { mdiHeart } from "@mdi/js";
 import { Container, Row, Col } from "reactstrap";
 
 function App() {
   return (
-    <KSite dark>
+    <KSite currentTheme="default-dark">
+      <KNavbarOld brandTitle="ahoj" dark />
       <KPage name="Home" route="/">
         <KHeader minHeight={50}>
           <Container>
@@ -27,78 +33,101 @@ function App() {
               <Col className="p-2" md={6}>
                 <KCard>
                   <KTable stripes className="text-wrap">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
+                    <KTableHead>
+                      <KTableRow>
+                        <KTableItem as="th">#</KTableItem>
+                        <KTableItem as="th">First Name</KTableItem>
+                        <KTableItem as="th">Last Name</KTableItem>
+                        <KTableItem as="th">Username</KTableItem>
+                      </KTableRow>
+                    </KTableHead>
+                    <KTableBody>
+                      <KTableRow>
+                        <KTableItem scope="row">1</KTableItem>
+                        <KTableItem>Mark</KTableItem>
+                        <KTableItem>Otto</KTableItem>
+                        <KTableItem>@mdo</KTableItem>
+                      </KTableRow>
+                      <KTableRow>
+                        <KTableItem scope="row">2</KTableItem>
+                        <KTableItem>Jacob</KTableItem>
+                        <KTableItem>Thornton</KTableItem>
+                        <KTableItem>@fat</KTableItem>
+                      </KTableRow>
+                      <KTableRow>
+                        <KTableItem scope="row">3</KTableItem>
+                        <KTableItem>Larry</KTableItem>
+                        <KTableItem>the Bird</KTableItem>
+                        <KTableItem>@twitter</KTableItem>
+                      </KTableRow>
+                    </KTableBody>
                   </KTable>
-                  <KCardFooter align="end">by Dominik Repkovsky</KCardFooter>
+                  <KCardFooter align="end">
+                    <KIcon
+                      size={1.2}
+                      regular
+                      prefix="fa"
+                      className="p-1"
+                      name="user"
+                    />
+                    by Dominik Repkovsky
+                  </KCardFooter>
                 </KCard>
               </Col>
               <Col className="p-2" md={6}>
                 <KCard>
-                  <KCardHeader align="start">
+                  <KCardHeader>
                     <KCardTitle>This is a card with table</KCardTitle>
                   </KCardHeader>
-                  <KTable stripes className="text-wrap">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </KTable>
+                  <KCardBody>Hello my name is dominik</KCardBody>
+                  <KCardFloater ver="end" hor="start">
+                    <KIcon
+                      size={1.2}
+                      regular
+                      prefix="fa"
+                      className="p-1"
+                      name="user"
+                    />
+                  </KCardFloater>
                 </KCard>
               </Col>
             </Row>
           </Container>
         </KHeader>
+        <KSection>
+          <KFlexContainer className="px-5" direction="row">
+            <KCard className="m-2">
+              <KCardHeader>
+                <KCardTitle>This is a card with table</KCardTitle>
+              </KCardHeader>
+              <KCardBody>Hello my name is dominik</KCardBody>
+              <KCardFloater ver="end" hor="start">
+                <KIcon
+                  size={1.2}
+                  regular
+                  prefix="fa"
+                  className="p-1"
+                  name="user"
+                />
+              </KCardFloater>
+            </KCard>
+            <KCard>
+              <KCardHeader>
+                <KCardTitle>This is a card with table</KCardTitle>
+              </KCardHeader>
+              <KCardBody>Hello my name is dominik</KCardBody>
+              <KCardFloater ver="end" hor="start">
+                <KIcon
+                  size={1.2}
+                  regular
+                  prefix="fa"
+                  className="p-1"
+                  name="user"
+                />
+              </KCardFloater>
+            </KCard>
+          </KFlexContainer>
+        </KSection>
       </KPage>
       <KPage name="Gallery/Interior" route="/gallery" navbar>
         This is a gallery.

@@ -1,14 +1,40 @@
 ////// IMPORTS //////
 
 //// EXTERNAL ////
+import styled from "styled-components";
 
 // React
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
 //// INTERNAL ////
+import { bootstrapQuery } from "../Libs/KLib";
 
 ////// COMPONENT //////
+const KHeroBody = styled.div`
+  position: relative;
+  z-index: 2;
+  ${(size) => `
+  height: ${size == "fullheight" ? "100vh" : "3.5rem"}
+`}
+`;
+
+const KHeroWrapper = styled.div`
+  position: relative;
+  width: 100%;
+
+  ${KHeroBody} {
+    padding: ${({ size }) =>
+        size == "medium"
+          ? "9rem"
+          : size == "large"
+          ? "18rem"
+          : size == "fullheight"
+          ? "3rem"
+          : "3rem"}
+      1.5rem;
+  }
+`;
 
 function KHeader(props) {
   const { children, minHeight, className } = props;

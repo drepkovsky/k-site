@@ -14,9 +14,16 @@
       "info": "#fae700",
       "link": "#4C7CED"
     },
-    "font": "Quicksand"
+    "font": "Quicksand",
+    "weights": {
+      "light": 300,
+      "semi-light": 400,
+      "normal": 500,
+      "semi-bold": 600,
+      "bold": 700
+    }
   },
-  "dark": {
+  "default-dark": {
     "id": "t_002",
     "name": "Dark",
     "colors": {
@@ -31,6 +38,13 @@
       "info": "#fae700",
       "link": "#4C7CED"
     },
-    "font": "Quicksand"
+    "font": "Quicksand",
+    "weights": {
+      "light": 300,
+      "semi-light": 400,
+      "normal": 500,
+      "semi-bold": 600,
+      "bold": 700
+    }
   }
 }

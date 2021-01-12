@@ -15242,25 +15242,6 @@ a.text-card-borders-dark:hover, a.text-card-borders-dark:focus {
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-[theme="light"] body {
-  background-color: #fff;
-  color: #232323;
-}
-
-[theme="dark"] body {
-  background-color: #232323;
-  color: #fff;
-}
-
-body {
-  text-align: center;
-  font-family: "Quicksand", sans-serif;
-}
-
 .fill-parent {
   width: 100%;
   height: 100%;
@@ -15280,42 +15261,115 @@ body {
 
 @use "../variables";
 .k-navbar {
-  min-height: 3.25rem;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
-.k-navbar .container {
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
+.k-navbar .k-navbar-brand {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  min-height: 3.25rem;
-  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
-@media screen and (992px) {
-  .k-navbar .is-spaced {
-    padding: 0.5rem 2.5rem;
-  }
+.k-navbar .k-navbar-brand:hover {
+  text-decoration: none;
 }
 
-.k-navbar-brand {
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  min-height: 3.25rem;
+.k-navbar .k-navbar-brand.extend {
+  padding: 20px 0px;
+}
+
+.k-navbar.navbar-dark .navbar-nav .nav-link {
+  color: #f2f2f2;
+}
+
+.k-navbar.navbar-dark .navbar-toggler-icon {
+  background-image: none;
+  color: #f2f2f2;
+}
+
+.k-navbar.navbar-light .navbar-nav .nav-link {
+  color: #232323;
+}
+
+.k-navbar.navbar-light .navbar-toggler-icon {
+  background-image: none;
+  color: #232323;
+}
+
+.k-navbar .navbar-toggler {
+  border: none;
+}
+
+.k-navbar .navbar-toggler:active {
+  outline: none;
+  border: none;
+}
+
+.k-navbar .navbar-toggler:focus {
+  outline: none;
+  border: none;
+}
+
+.k-navbar .dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.k-navbar .dropdown-toggle:hover {
+  background-color: transparent;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.k-navbar .dropdown-toggle:active {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  box-shadow: none;
+}
+
+.k-navbar .dropdown-toggle:focus {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.k-navbar .dropdown-menu {
+  text-align: center;
+  min-width: 7rem;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.k-navbar .dropdown-menu .dropdown-item:hover {
+  background-color: transparent;
+}
+
+.k-navbar .dropdown-menu .dropdown-item:active {
+  background-color: transparent;
+}
+
+.k-navbar .dropdown-menu .dropdown-item:focus {
+  background-color: transparent;
+  outline: none;
 }
 
 .k-header {
   position: relative;
   width: 100%;
-  background-color: transparent;
 }
 
 .k-header-front {
@@ -15514,68 +15568,6 @@ body {
   padding-right: 1.5rem;
 }
 
-.k-card-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  min-height: 3rem;
-  padding: 0.5rem 1.5rem;
-  background: none;
-  border-bottom: 1px solid;
-}
-
-.k-card-body {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
-  padding: 1.5rem;
-  position: relative;
-}
-
-.k-card-footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  min-height: 3rem;
-  padding: 0.5rem 1.5rem;
-  background: none;
-  border-top: 1px solid;
-}
-
-.k-card-title {
-  font-size: 1.125rem;
-  line-height: 1.2;
-  font-weight: 400;
-  margin: 0;
-}
-
-.k-card-floater {
-  position: absolute;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  min-width: 50px;
-  min-height: 50px;
-  border-radius: 50%;
-}
-
 .k-image {
   width: 100%;
 }
@@ -15584,80 +15576,5 @@ body {
   display: block;
   width: 100%;
   overflow-x: auto;
-}
-
-.k-table {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  border-collapse: collapse;
-  vertical-align: middle;
-  text-align: start;
-}
-
-.k-table thead th {
-  border-top: 0;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  vertical-align: bottom;
-  border-bottom: 1px solid #dee2e6;
-  color: #9aa0ac;
-  text-transform: uppercase;
-  font-size: 0.875rem;
-}
-
-.k-table tr:first-child {
-  border-top: 0;
-}
-
-.k-table tr:first-child th {
-  border-top: 0;
-}
-
-.k-table.k-table-striped tbody tr:nth-of-type(odd) {
-  background: transparent;
-}
-
-.k-table.k-table-striped tbody tr:nth-of-type(2n) {
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.k-table td,
-.k-table th {
-  padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
-}
-
-[theme="dark"] .k-card {
-  background-color: #333333;
-}
-
-[theme="dark"] .k-card-header,
-[theme="dark"] .k-card-footer,
-[theme="dark"] .k-card {
-  border-color: rgba(174, 181, 194, 0.12);
-  border-bottom-color: rgba(174, 181, 194, 0.12);
-  border-top-color: rgba(174, 181, 194, 0.12);
-}
-
-[theme="dark"] .k-table thead th {
-  color: #acb0ba;
-}
-
-[theme="light"] .k-card {
-  background-color: white;
-}
-
-[theme="light"] .k-card-header,
-[theme="light"] .k-card-footer,
-[theme="light"] .k-card {
-  border-color: rgba(0, 40, 100, 0.12);
-  border-bottom-color: rgba(0, 40, 100, 0.12);
-  border-top-color: rgba(0, 40, 100, 0.12);
-}
-
-[theme="light"] .k-table thead th {
-  color: #9aa0ac;
 }
 /*# sourceMappingURL=index.css.map */

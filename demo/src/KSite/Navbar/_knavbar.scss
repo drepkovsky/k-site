@@ -1,119 +1,119 @@
 @use "../variables";
-// .k-navbar {
-//   transition: all 0.4s ease-in-out;
-
-//   .k-navbar-brand {
-//     display: flex;
-//     align-items: center;
-//     transition: all 0.4s ease-in-out;
-//     &:hover {
-//       text-decoration: none;
-//     }
-//     &.extend {
-//       padding: 20px 0px;
-//     }
-//   }
-
-//   &.navbar-dark {
-//     .navbar-nav {
-//       .nav-link {
-//         color: $light;
-//       }
-//     }
-
-//     .navbar-toggler-icon {
-//       background-image: none;
-//       color: $light;
-//     }
-//   }
-
-//   &.navbar-light {
-//     .navbar-nav {
-//       .nav-link {
-//         color: $dark;
-//       }
-//     }
-
-//     .navbar-toggler-icon {
-//       background-image: none;
-//       color: $dark;
-//     }
-//   }
-
-//   .navbar-toggler {
-//     border: none;
-//     &:active {
-//       outline: none;
-//       border: none;
-//     }
-//     &:focus {
-//       outline: none;
-//       border: none;
-//     }
-//   }
-//   .dropdown-toggle {
-//     background-color: transparent;
-//     border: none;
-//     cursor: pointer;
-//     &:hover {
-//       background-color: transparent;
-//       border: none;
-//       box-shadow: none;
-//     }
-//     &:active {
-//       background-color: transparent;
-//       outline: none;
-//       border: none;
-//       box-shadow: none;
-//       box-shadow: none;
-//     }
-//     &:focus {
-//       background-color: transparent;
-//       outline: none;
-//       border: none;
-//       box-shadow: none;
-//     }
-//   }
-//   .dropdown-menu {
-//     text-align: center;
-//     min-width: 7rem;
-//     border-radius: 5px;
-//     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
-//     .dropdown-item {
-//       &:hover {
-//         background-color: transparent;
-//       }
-//       &:active {
-//         background-color: transparent;
-//       }
-//       &:focus {
-//         background-color: transparent;
-//         outline: none;
-//       }
-//     }
-//   }
-// }
-
 .k-navbar {
-  min-height: 3.25rem;
+  transition: all 0.4s ease-in-out;
 
-  .container {
-    align-items: stretch;
+  .k-navbar-brand {
     display: flex;
-    min-height: 3.25rem;
-    width: 100%;
+    align-items: center;
+    transition: all 0.4s ease-in-out;
+    &:hover {
+      text-decoration: none;
+    }
+    &.extend {
+      padding: 20px 0px;
+    }
   }
 
-  @media screen and (map-get($grid-breakpoints,"lg")) {
-    .is-spaced {
-      padding: 0.5rem 2.5rem;
+  &.navbar-dark {
+    .navbar-nav {
+      .nav-link {
+        color: $light;
+      }
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      color: $light;
+    }
+  }
+
+  &.navbar-light {
+    .navbar-nav {
+      .nav-link {
+        color: $dark;
+      }
+    }
+
+    .navbar-toggler-icon {
+      background-image: none;
+      color: $dark;
+    }
+  }
+
+  .navbar-toggler {
+    border: none;
+    &:active {
+      outline: none;
+      border: none;
+    }
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+  .dropdown-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    &:active {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      box-shadow: none;
+      box-shadow: none;
+    }
+    &:focus {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      box-shadow: none;
+    }
+  }
+  .dropdown-menu {
+    text-align: center;
+    min-width: 7rem;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
+    .dropdown-item {
+      &:hover {
+        background-color: transparent;
+      }
+      &:active {
+        background-color: transparent;
+      }
+      &:focus {
+        background-color: transparent;
+        outline: none;
+      }
     }
   }
 }
 
-.k-navbar-brand {
-  align-items: stretch;
-  display: flex;
-  flex-shrink: 0;
-  min-height: 3.25rem;
-}
+// .k-navbar {
+//   min-height: 3.25rem;
+
+//   .container {
+//     align-items: stretch;
+//     display: flex;
+//     min-height: 3.25rem;
+//     width: 100%;
+//   }
+
+//   @media screen and (map-get($grid-breakpoints,"lg")) {
+//     .is-spaced {
+//       padding: 0.5rem 2.5rem;
+//     }
+//   }
+// }
+
+// .k-navbar-brand {
+//   align-items: stretch;
+//   display: flex;
+//   flex-shrink: 0;
+//   min-height: 3.25rem;
+// }

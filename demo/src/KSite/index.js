@@ -20,7 +20,13 @@ import {
   KCardFloater,
 } from "./Atoms/KCard";
 import KIcon from "./Atoms/KIcon";
-import KTable from "./Atoms/KTable";
+import {
+  KTable,
+  KTableBody,
+  KTableHead,
+  KTableItem,
+  KTableRow,
+} from "./Atoms/KTable";
 
 export {
   KFlexContainer,
@@ -44,4 +50,8 @@ export {
   KCardFloater,
   KTable,
   KNavbar,
+  KTableRow,
+  KTableItem,
+  KTableBody,
+  KTableHead,
 };

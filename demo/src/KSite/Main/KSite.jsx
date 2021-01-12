@@ -18,11 +18,18 @@ import KNavbarOld from "../Navbar/KNavbarOld";
 import KPage from "./KPage";
 import KSection from "./KSection";
 import { setNavbarLinks } from "../redux/actions/act_con";
-import { useTheme } from "../Libs/useTheme";
+import { useTheme } from "../Libs/KThemes";
 //STYLE
 import "../index.css";
 
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+
+const initIcons = () => {
+  let fontAwesome = document.createElement("script");
+  fontAwesome.src = "https://kit.fontawesome.com/556066db54.js";
+  fontAwesome.crossOrigin = "anonymous";
+  document.body.appendChild(fontAwesome);
+};
 
 export const GlobalStyles = createGlobalStyle`
 html {
@@ -30,7 +37,9 @@ html {
 }
 body{
   text-align: center;
+  font-size:1rem;
   font-family: ${({ theme }) => theme.font}, sans-serif;
+  font-weight:500;
   color: ${({ theme }) => theme.colors.text};
   background: ${({ theme }) => theme.colors.body};
   transition: all 0.50s linear;
@@ -44,8 +53,8 @@ a {
 `;
 
 function KSiteBody(props) {
-  const { children, dark } = props;
-  const { theme, getFonts } = useTheme();
+  const { children, additionalThemes = {}, currentTheme = "default" } = props;
+  const { theme, mergeThemes, getFonts, setCurrentTheme } = useTheme();
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
@@ -53,14 +62,15 @@ function KSiteBody(props) {
   }, [children]);
 
   useEffect(() => {
-    // document.documentElement.setAttribute("theme", dark ? "dark" : "light");
+    mergeThemes(additionalThemes);
+    setCurrentTheme(currentTheme);
 
     WebFont.load({
       google: {
         families: getFonts(),
       },
     });
-  }, [dark]);
+  }, [additionalThemes]);
 
   //find all pages and sections that have to be shown in navbar
   const initNavbarPages = () => {
@@ -136,6 +146,11 @@ const Body = connect(mapStateToProps, { setNavbarLinks })(KSiteBody);
 
 function KSite(props) {
   const { children } = props;
+
+  useEffect(() => {
+    initIcons();
+  });
+
   return (
     <Provider store={store}>
       <Body {...props}>{children}</Body>
@@ -144,7 +159,8 @@ function KSite(props) {
 }
 
 KSite.propTypes = {
-  dark: PropTypes.bool,
+  additionalThemes: PropTypes.object,
+  currentTheme: PropTypes.string,
 };
 
 export default KSite;
