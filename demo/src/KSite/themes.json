@@ -18,7 +18,7 @@
     "weights": {
       "light": 300,
       "semi-light": 400,
-      "normal": 500,
+      "regular": 500,
       "semi-bold": 600,
       "bold": 700
     }
@@ -42,7 +42,7 @@
     "weights": {
       "light": 300,
       "semi-light": 400,
-      "normal": 500,
+      "regular": 500,
       "semi-bold": 600,
       "bold": 700
     }

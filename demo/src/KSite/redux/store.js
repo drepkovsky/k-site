@@ -9,9 +9,9 @@ const middleware = [thunk];
 const composeArguments = [applyMiddleware(...middleware)];
 
 // if (config.environment === "dev") {
-// composeArguments.push(
-//     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
+composeArguments.push(
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 // }
 
 const store = createStore(index, initialState, compose(...composeArguments));

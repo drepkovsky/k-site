@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import _ from "lodash";
-import { isHex } from "./KColorPalette";
-import { connect } from "react-redux";
-
+import _, { map } from "lodash";
+import { colorAlpha, getContrast, isHex } from "./KColorPalette";
+import { css } from "styled-components";
 import themesJSON from "../themes.json";
+import colorPallete from "./colors.json";
+import { bootstrapQuery } from "./KLib";
 
 export const useTheme = (props) => {
   const themes = themesJSON;
@@ -29,14 +30,29 @@ export const useTheme = (props) => {
   return { theme, setCurrentTheme, getFonts, mergeThemes };
 };
 
-export const getColorFromTheme = (
-  theme = themesJSON.default,
-  color,
-  fallback = "#111"
-) => {
-  console.log(color);
-  console.log(theme);
-  console.log(theme.colors[color]);
-
-  return theme.colors[color] || isHex(color) ? color : fallback;
+/**
+ *
+ * @param {Object} theme
+ * @param {String} color
+ */
+export const getColor = (color, theme = themesJSON.default.id, fallback) => {
+  if (color) {
+    const tmp = color.split("-");
+    if (tmp.length > 1) {
+      return colorPallete[tmp[0]] ? colorPallete[tmp[0]][tmp[1]] : color;
+    }
+    return theme.colors[tmp[0]]
+      ? theme.colors[tmp[0]]
+      : colorPallete[tmp[0]]
+      ? colorPallete[tmp[0]][500]
+        ? colorPallete[tmp[0]][500]
+        : colorPallete[tmp[0]]
+      : fallback
+      ? fallback
+      : color;
+  }
+  return "";
+};
+export const getFontWeight = (weightName, theme = themesJSON.default) => {
+  return theme.weights[weightName] ? theme.weights[weightName] : 500;
 };

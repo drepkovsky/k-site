@@ -1,14 +1,15 @@
 ////// IMPORTS //////
 
 //// EXTERNAL ////
-import { mdiChevronRight, mdiChevronLeft, mdiClose } from "@mdi/js";
 // React
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
 
 // Reactstrap
-import { Container, Modal, ModalBody } from "reactstrap";
+import { Modal, ModalBody, Spinner } from "reactstrap";
+import KButton from "../Atoms/KButton";
 import KIcon from "../Atoms/KIcon";
+import { KLazyImage } from "../Atoms/KImage";
 
 /////STYLES //////
 
@@ -35,12 +36,17 @@ function KGallerySlider(props) {
     height: window.innerHeight,
   });
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(shouldLoadDimensions);
 
   //effects
   useEffect(() => {
     setModalOpen(isOpen);
     setCurrentIndex(startIndex);
   }, [isOpen, startIndex]);
+
+  useEffect(() => {
+    setLoading(shouldLoadDimensions);
+  }, [currentIndex]);
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -86,21 +92,50 @@ function KGallerySlider(props) {
   const imageBody = () => {
     return (
       <div className="k-gallery-img-slider-holder">
-        <img src={images[currentIndex]?.src} className="k-slider-img " />
-        <div className="k-gallery-img-controls-holder p-1">
+        <KLazyImage src={images[currentIndex]?.src} className="k-slider-img " />
+        <div className="k-gallery-img-controls-holder p-3">
           <div className="d-flex flex-row justify-content-end">
-            <span className="k-gallery-img-control p-1" onClick={close}>
-              <KIcon icon={mdiClose} />
-            </span>
+            <KButton
+              border={false}
+              bg="#00000080"
+              color="white"
+              p="0.5"
+              radius="50%"
+              hover={{
+                bg: "#000000a0",
+                color: "white",
+              }}
+              onClick={close}>
+              <KIcon size={1.5} name="times" prefix="fa" />
+            </KButton>
           </div>
           <div className="d-flex flex-row justify-content-between">
-            <span className="k-gallery-img-control p-1" onClick={previous}>
-              <KIcon icon={mdiChevronLeft} />
-            </span>
-
-            <span className="k-gallery-img-control p-1">
-              <KIcon icon={mdiChevronRight} />
-            </span>
+            <KButton
+              border={false}
+              bg="#00000080"
+              color="white"
+              p="0.5"
+              radius="50%"
+              hover={{
+                bg: "#000000a0",
+                color: "white",
+              }}
+              onClick={previous}>
+              <KIcon size={1.5} name="chevron-left" prefix="fa" />
+            </KButton>
+            <KButton
+              border={false}
+              bg="#00000080"
+              color="white"
+              p="0.5"
+              radius="50%"
+              hover={{
+                bg: "#000000a0",
+                color: "white",
+              }}
+              onClick={next}>
+              <KIcon size={1.5} name="chevron-right" prefix="fa" />
+            </KButton>
           </div>
           <div className="d-flex flex-row justify-content-center"></div>
         </div>
@@ -146,20 +181,19 @@ function KGallerySlider(props) {
       );
     };
 
-    if (shouldLoadDimensions) {
-      if (images[currentIndex]) {
-        if (!images[currentIndex]?.width) {
-          const tmpImg = new Image();
-          tmpImg.src = images[currentIndex]?.src;
-          tmpImg.onload = () => {
-            images[currentIndex].width = tmpImg.width;
-            images[currentIndex].height = tmpImg.height;
-            return modal();
-          };
-        }
-        return modal();
+    console.log(loading);
+    if (loading) {
+      if (!images[currentIndex]?.width) {
+        const tmpImg = new Image();
+        tmpImg.src = images[currentIndex]?.src;
+        tmpImg.onload = () => {
+          images[currentIndex].width = tmpImg.width;
+          images[currentIndex].height = tmpImg.height;
+          setLoading(false);
+        };
+      } else {
+        setLoading(false);
       }
-      return null;
     }
     return modal();
   }

@@ -1,6 +1,6 @@
 run this command in your react project root
 
-npm install bootstrap jquery react-datepicker react-redux react-router-dom reactstrap redux redux-thunk sass npm install @mdi/react @mdi/js
+npm install bootstrap jquery react-datepicker react-redux react-router-dom reactstrap redux redux-thunk sass
 
 add KSite folder right to your src folder to work
 

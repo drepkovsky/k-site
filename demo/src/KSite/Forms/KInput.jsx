@@ -4,11 +4,11 @@
 import DatePicker from "react-datepicker";
 
 //REDUX
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 
 // React
 import PropTypes from "prop-types";
-import React, { Component, Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Reactstrap
 import { Input } from "reactstrap";
@@ -16,70 +16,93 @@ import { Input } from "reactstrap";
 /////STYLES //////
 import "react-datepicker/dist/react-datepicker.css";
 //// INTERNAL ////
-import { uuidv4, alignItems, alignSelf } from "../Libs/KLib";
-import { setFormValue } from "../redux/actions/act_form";
+import { uuidv4 } from "../Libs/KLib";
+import { setFormInput, setFormInputValue } from "../redux/actions/act_form";
+import styled from "styled-components";
+import { getColor, getFontWeight } from "../Libs/KThemes";
+import { component } from "../Libs/styles";
+import KComponent from "../Atoms/KComponent";
 
 ////// COMPONENT //////
 
+const KInputWrapper = styled.input`
+  padding: 0.5rem 1rem;
+  line-height: 1.5rem;
+  font-size: 1rem;
+  border: 1px solid ${getColor("gray-300")};
+  border-radius: 5px;
+  color: black;
+  font-weight: ${getFontWeight("regular")};
+
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.2);
+  }
+
+  &.success {
+    border-color: rgb(70, 218, 137);
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(70, 218, 137, 0.2);
+  }
+
+  &.warning {
+    border-color: rgb(218, 183, 70);
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(218, 183, 70, 0.2);
+  }
+
+  &.error {
+    border-color: rgb(218, 72, 72);
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(218, 72, 72, 0.2);
+  }
+
+  ${component}
+`;
+
 function KInput(props) {
   props = props.propsWrapper ? props.propsWrapper : props;
-  const {
-    required,
-    className,
-    wrapperClasName,
-    formId,
-    name,
-    defaultValue,
-    placeHolder,
-    readOnly,
-    onClick,
-    label,
-    disabled,
-    type,
-  } = props;
+  const { wrapperClassName, labelClassName, formId, name, label, type } = props;
 
   const [id, setId] = useState("");
-  const [value, setValue] = useState(defaultValue || "");
-  const align = alignItems(props.align);
-  const alignLabel = alignSelf(props.alignLabel);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setId(uuidv4());
+    const tmpId = uuidv4();
+    dispatch(setFormInput(formId, name, tmpId));
+    setId(tmpId);
   }, []);
 
   const onChange = (e) => {
-    props.setFormValue(formId, name, e.target.value);
+    if (id) dispatch(setFormInputValue(formId, id, e.target.value));
   };
 
   const result = (
-    <div className={`k-input-container ${align} ${wrapperClasName}`}>
-      <label className={`px-2 k-input-label ${alignLabel}`} htmlFor={id}>
+    <KComponent
+      as="div"
+      display="flex"
+      flexDir="column"
+      text="left"
+      className={`${wrapperClassName || ""}`}>
+      <label className={`${labelClassName || ""}`} htmlFor={id}>
         {label}
       </label>
 
-      <Input
+      <KInputWrapper
         type={type}
-        placeholder={placeHolder}
-        onClick={onClick}
-        defaultValue={defaultValue}
-        readOnly={readOnly}
-        className={className}
+        {...props}
         id={id}
         name={id}
-        required={required}
-        onChange={onChange}
-        disabled={disabled}></Input>
-    </div>
+        onChange={onChange}></KInputWrapper>
+    </KComponent>
   );
 
   if (props.type == "datepicker") {
     return (
-      <KDatePicker
-        name={name}
-        id={id}
-        formId={formId}
-        setValue={setValue}
-        setFormValue={props.setFormValue}>
+      <KDatePicker name={name} id={id} formId={formId}>
         {result}
       </KDatePicker>
     );
@@ -90,7 +113,6 @@ function KInput(props) {
 const KDatePicker = (props) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
-  const { id, formId, setFormValue, name } = props;
 
   const onChange = (dates) => {
     const [start, end] = dates;
@@ -107,8 +129,6 @@ const KDatePicker = (props) => {
       } else if ((start != null) & (end != null)) {
         val = start.toLocaleDateString() + " - " + end.toLocaleDateString();
       }
-      props.setValue(val);
-      setFormValue(formId, name, dates);
     }
   };
 
@@ -116,33 +136,22 @@ const KDatePicker = (props) => {
     <DatePicker
       selectsRange
       selected={startDate}
-      onChange={onChange}
       startDate={startDate}
       endDate={endDate}
       popperPlacement="bottom-start"
       showPopperArrow={false}
       customInput={props.children}
       shouldCloseOnSelect={false}
+      onChange={onChange}
     />
   );
 };
 
 KInput.propTypes = {
+  wrapperClassName: PropTypes.string,
+  labelClassName: PropTypes.string,
   label: PropTypes.string,
-  type: PropTypes.string,
-  defaultValue: PropTypes.string,
-  placeHolder: PropTypes.string,
-  disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  align: PropTypes.string,
-  alignLabel: PropTypes.string,
-  onClick: PropTypes.func,
-  name: PropTypes.string,
-  required: PropTypes.bool,
-  ref: PropTypes.element,
-  className: PropTypes.string,
-  wrapperClasName: PropTypes.string,
 };
 
 ////// EXPORTS //////
-export default connect(null, { setFormValue })(KInput);
+export default KInput;

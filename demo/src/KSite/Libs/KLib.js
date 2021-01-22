@@ -8,38 +8,18 @@ export function uuidv4() {
   });
 }
 
-export const alignSelf = (align, br) => {
-  var res = "align-self";
+export function randStr(len, numbers: true) {
+  var result = "";
 
-  if (["xs", "sm", "md", "lg", "xl"].includes(br)) res += "-" + br;
-  if (["baseline", "center", "end", "start", "stretch"].includes(align))
-    res += "-" + align;
-  else res += "-center";
+  var charset = numbers
+    ? "abcdefghijklmnopqrstuvwxyz0123456789"
+    : "abcdefghijklmnopqrstuvwxyz";
 
-  return res;
-};
+  for (var i = 0; i < len; i++)
+    result += charset.charAt(Math.floor(Math.random() * charset.length));
 
-export const alignItems = (align, br) => {
-  var res = "align-items";
-
-  if (["xs", "sm", "md", "lg", "xl"].includes(br)) res += "-" + br;
-  if (["baseline", "center", "end", "start", "stretch"].includes(align))
-    res += "-" + align;
-  else res += "-center";
-
-  return res;
-};
-
-export const justifyContent = (just, br) => {
-  var res = "justify-content";
-
-  if (["xs", "sm", "md", "lg", "xl"].includes(br)) res += "-" + br;
-  if (["around", "between", "center", "end", "start"].includes(just))
-    res += "-" + just;
-  else res += "-center";
-
-  return res;
-};
+  return result;
+}
 
 export function isMobile() {
   // device detection
@@ -52,32 +32,6 @@ export function isMobile() {
     )
   );
 }
-
-export const bootstrapSizes = {
-  xs: 0,
-  sm: 576,
-  md: 720,
-  lg: 960,
-  xl: 1140,
-};
-
-export const bootstrapQuery = {
-  xs: `(min-width: ${bootstrapSizes.xs})`,
-  sm: `(min-width: ${bootstrapSizes.sm})`,
-  md: `(min-width: ${bootstrapSizes.md})`,
-  lg: `(min-width: ${bootstrapSizes.lg})`,
-  xl: `(min-width: ${bootstrapSizes.xl})`,
-};
-
-export const getBootstrapSizes = (width = window.innerWidth) => {
-  return {
-    xs: true,
-    sm: width > 576,
-    md: width > 720,
-    lg: width > 960,
-    xl: width > 1140,
-  };
-};
 
 export const cleanArray = (arr = []) => {
   while (arr.length > 0) {

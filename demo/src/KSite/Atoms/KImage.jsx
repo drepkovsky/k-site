@@ -1,31 +1,32 @@
 ////// IMPORTS //////
-
-//// EXTERNAL ////
-
-// React
-import PropTypes from "prop-types";
-import React, { Fragment, useState, useEffect } from "react";
-
-// Reactstrap
-import { Container } from "reactstrap";
-
-//// INTERNAL ////
+import styled from "styled-components";
+import { component } from "../Libs/styles";
+import KSpinner from "./KSpinner";
+import React, { useState, useEffect } from "react";
 
 ////// COMPONENT //////
+export const KImage = styled.img`
+  ${component}
+`;
 
-function KImage(props) {
-  //props
-  const { src, alt } = props;
-  //states
-  //effects
-  //render
-  return <img src={src} alt={alt} className="k-image"></img>;
-}
+export const KLazyImage = (props) => {
+  const { src, spinner = true } = props;
 
-KImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  alt: PropTypes.string,
+  const [sourceLoaded, setSourceLoaded] = useState(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => setSourceLoaded(src);
+  }, [src]);
+
+  if (sourceLoaded) {
+    return <KImage {...props} />;
+  } else {
+    if (spinner) {
+      return <KSpinner />;
+    }
+  }
 };
 
 ////// EXPORTS //////
-export default KImage;

@@ -15259,114 +15259,6 @@ a.text-card-borders-dark:hover, a.text-card-borders-dark:focus {
   min-height: inherit;
 }
 
-@use "../variables";
-.k-navbar {
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.k-navbar .k-navbar-brand {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-}
-
-.k-navbar .k-navbar-brand:hover {
-  text-decoration: none;
-}
-
-.k-navbar .k-navbar-brand.extend {
-  padding: 20px 0px;
-}
-
-.k-navbar.navbar-dark .navbar-nav .nav-link {
-  color: #f2f2f2;
-}
-
-.k-navbar.navbar-dark .navbar-toggler-icon {
-  background-image: none;
-  color: #f2f2f2;
-}
-
-.k-navbar.navbar-light .navbar-nav .nav-link {
-  color: #232323;
-}
-
-.k-navbar.navbar-light .navbar-toggler-icon {
-  background-image: none;
-  color: #232323;
-}
-
-.k-navbar .navbar-toggler {
-  border: none;
-}
-
-.k-navbar .navbar-toggler:active {
-  outline: none;
-  border: none;
-}
-
-.k-navbar .navbar-toggler:focus {
-  outline: none;
-  border: none;
-}
-
-.k-navbar .dropdown-toggle {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.k-navbar .dropdown-toggle:hover {
-  background-color: transparent;
-  border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-
-.k-navbar .dropdown-toggle:active {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  box-shadow: none;
-}
-
-.k-navbar .dropdown-toggle:focus {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-
-.k-navbar .dropdown-menu {
-  text-align: center;
-  min-width: 7rem;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
-          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
-}
-
-.k-navbar .dropdown-menu .dropdown-item:hover {
-  background-color: transparent;
-}
-
-.k-navbar .dropdown-menu .dropdown-item:active {
-  background-color: transparent;
-}
-
-.k-navbar .dropdown-menu .dropdown-item:focus {
-  background-color: transparent;
-  outline: none;
-}
-
 .k-header {
   position: relative;
   width: 100%;
@@ -15423,20 +15315,22 @@ a.text-card-borders-dark:hover, a.text-card-borders-dark:focus {
 }
 
 .k-gallery-image-holder {
-  position: absolute;
+  position: relative;
 }
 
-.k-img, .k-gallery-img {
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 100%;
+.k-gallery-image-ghost {
+  background: #353535;
+  min-height: auto;
 }
 
 .k-gallery-img {
+  width: 100%;
+  max-width: 100%;
   -webkit-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
   opacity: 1;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .k-gallery-img:hover {
@@ -15479,12 +15373,26 @@ a.text-card-borders-dark:hover, a.text-card-borders-dark:focus {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .k-gallery-img-control {
-  border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
 }
 
 .k-gallery-img-control:hover {
@@ -15506,6 +15414,24 @@ a.text-card-borders-dark:hover, a.text-card-borders-dark:focus {
   border: none;
   -webkit-box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.4);
           box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.4);
+}
+
+.k-gallery-slider-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: black, 0.3;
 }
 
 .k-input-container {

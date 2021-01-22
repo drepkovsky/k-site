@@ -6,15 +6,14 @@ import React, { Fragment, useState, useEffect, useRef } from "react";
 
 // Reactstrap
 import { Container, Spinner } from "reactstrap";
+import KIcon from "../Atoms/KIcon";
 
 //// INTERNAL ////
-import {
-  getBootstrapSizes,
-  cleanArray,
-  initArray,
-  minIndex,
-} from "../Libs/KLib";
+import { getBootstrapSizes } from "../Libs/styles";
+import { cleanArray, initArray, minIndex } from "../Libs/KLib";
 import KGallerySlider from "./KGallerySlider";
+import KAnimation from "../Atoms/KAnimation";
+import { KLazyImage } from "../Atoms/KImage";
 
 ////// COMPONENT //////
 const defaultSizes = {
@@ -27,12 +26,21 @@ const defaultSizes = {
 
 function KGallery(props) {
   //props
-  const { images, xs, sm, md, lg, xl, paddingClass } = props;
+  const {
+    images,
+    xs,
+    sm,
+    md,
+    lg,
+    xl,
+    paddingClass,
+    maxHeight = 400,
+    loadBuffer = 20,
+    animateImages = true,
+  } = props;
   //states
   const [galleryWidth, setGalleryWidth] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [loadedImages, setLoadedImages] = useState(0);
-  const [galleryImages, setGalleryImages] = useState([]);
+  const [imageLimit, setImageLimit] = useState(loadBuffer);
   const [isSliderOpen, setSliderOpen] = useState(false);
   const [clickedImageIndex, setClickedImageIndex] = useState(0);
   //consts
@@ -44,30 +52,6 @@ function KGallery(props) {
     window.addEventListener("resize", () => {
       getGallerySize();
     });
-
-    //get the sizes of all images
-    cleanArray(galleryImages);
-    images.map((img) => {
-      const tempImg = new Image();
-      tempImg.src = img.src;
-      tempImg.onload = () => {
-        galleryImages.push({
-          src: img.src,
-          description: img.description,
-          tags: img.tags,
-          width: tempImg.width,
-          height: tempImg.height,
-        });
-        setLoadedImages(galleryImages.length);
-        setLoading(images.length != galleryImages.length);
-      };
-    });
-
-    //cleanup
-    return () => {
-      cleanArray(galleryImages);
-    };
-    //useEffect will only be called if images array changed
   }, [images]);
 
   const getGallerySize = () => {
@@ -97,75 +81,87 @@ function KGallery(props) {
   const padding = paddingClass ? paddingClass : "p-2";
 
   //wanted width of each image in the gallery
-  const wantedWidth = galleryWidth / cols;
-  //array of heights of each col in gallery
-  var colsHeights = initArray(cols, 0);
 
   //grid images of gallery
-  const bodyImgs = () => {
-    return galleryImages.map((image, index) => {
-      const height = (wantedWidth / image.width) * image.height;
 
-      const x = minIndex(colsHeights);
-
-      const posX = x * wantedWidth;
-      const posY = colsHeights[x];
-
-      colsHeights[x] += height;
-
-      return (
-        <div
-          key={index}
-          className={`k-gallery-image-holder ${padding}`}
-          style={{
-            left: posX,
-            top: posY,
-            width: wantedWidth,
-            height: height,
-          }}>
-          <img
-            alt={image.description}
-            className="k-gallery-img"
-            src={image.src}
-            onClick={() => {
-              setClickedImageIndex(index);
-              setSliderOpen(true);
-            }}></img>
-        </div>
-      );
-    });
-  };
-
-  //spinner showing message if the gallery is not fully loaded
-  const spinner = () => {
+  const renderImage = (image, index) => {
     return (
-      <div>
-        <Spinner />
-        <p>Loading... {Math.floor((loadedImages / images.length) * 100)}% </p>
-      </div>
+      <KLazyImage
+        alt={image.description}
+        className="k-gallery-img "
+        src={image.src}
+        style={{
+          objectFit: "cover",
+          width: "100%",
+          maxHeight: maxHeight,
+        }}
+        onClick={() => {
+          setClickedImageIndex(index);
+          setSliderOpen(true);
+        }}
+      />
     );
   };
 
+  const bodyImgs = () => {
+    return images.map((image, index) => {
+      if (index < imageLimit) {
+        return (
+          <div key={index} className="py-3 k-gallery-image-holder">
+            {animateImages ? (
+              <KAnimation anim={["fadeIn 0.5s ease", "up 0.5s ease"]}>
+                {renderImage(image, index)}
+              </KAnimation>
+            ) : (
+              renderImage(image, index)
+            )}
+          </div>
+        );
+      }
+    });
+  };
+
   //prevents multiple drawing glitches
-  const body = [bodyImgs()];
-  const galleryHeight = Math.max(...colsHeights);
+  const body = bodyImgs();
+  let imgCounter = 0;
+
+  const columns = [];
+
+  for (var i = 0; i < cols; i++) {
+    columns.push([]);
+  }
+
+  body.forEach((image, index) => {
+    columns[index % cols].push(image);
+    if (image) imgCounter++;
+  });
 
   return (
     <Fragment>
-      {loading ? spinner() : null}
-      <div
-        className="k-gallery"
-        ref={galleryRef}
-        style={{ height: galleryHeight }}>
-        {body}
+      <div className="row" ref={galleryRef}>
+        {columns.map((col, index) => (
+          <div key={index} className={`relative col-${12 / cols}`}>
+            {col}
+          </div>
+        ))}
       </div>
+      {imgCounter < images.length && (
+        <div className="container py-2">
+          <span
+            className="btn"
+            onClick={() => setImageLimit(imageLimit + loadBuffer)}>
+            <KIcon size="3" prefix="fa" name="arrow-circle-down"></KIcon>
+          </span>
+        </div>
+      )}
       <KGallerySlider
-        images={galleryImages}
+        images={images}
         startIndex={clickedImageIndex}
         isOpen={isSliderOpen}
         onClose={() => {
           setSliderOpen(false);
         }}
+        shouldLoadDimensions
         fullscreen
       />
     </Fragment>
@@ -180,6 +176,7 @@ KGallery.propTypes = {
   lg: PropTypes.number,
   xl: PropTypes.number,
   paddingClass: PropTypes.string,
+  animateImages: PropTypes.bool,
 };
 
 ////// EXPORTS //////

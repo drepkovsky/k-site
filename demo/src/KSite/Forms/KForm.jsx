@@ -1,17 +1,10 @@
-////// IMPORTS //////
-
 //// EXTERNAL ////
-
 //REDUX
 import { connect } from "react-redux";
 
 // React
-import { Button } from "bootstrap";
 import PropTypes from "prop-types";
-import React, { Fragment, useState, useEffect, useRef } from "react";
-
-// Reactstrap
-import { Container, Form } from "reactstrap";
+import React, { useState, useEffect } from "react";
 
 //// INTERNAL ////
 import KInput from "./KInput";
@@ -34,15 +27,12 @@ function KForm(props) {
   //effects
   useEffect(() => {
     if (id) {
-      const tmpInputs = [];
-      //add a formiD to every child input
+      //add a formID to every child input
       setKids(
         recursiveChildrenMap(children, (child) => {
           var type = child.type;
-          if (typeof type === "object" && type !== null)
-            type = type.WrappedComponent;
 
-          if (type.name === KInput.WrappedComponent.name) {
+          if (type.name === KInput.name) {
             const clone = React.cloneElement(child, {
               formId: id,
             });
@@ -59,11 +49,21 @@ function KForm(props) {
     e.preventDefault();
 
     const { forms } = props;
-    const result = forms[id];
+    const result = {};
+
+    Object.keys(forms[id]).map((key) => {
+      Object.assign(result, {
+        [forms[id][key].name]: forms[id][key].value,
+      });
+    });
+
     var response = null;
     if (onOutput) response = onOutput(result);
 
-    console.log(result);
+    if (response)
+      if (response.error) {
+        Object.keys(response.error).forEach((key) => {});
+      }
   };
 
   //render

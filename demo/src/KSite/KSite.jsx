@@ -2,27 +2,26 @@
 
 //// EXTERNAL ////
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "./redux/store";
 import WebFont from "webfontloader";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 // React
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-// Reactstrap
-import KNavbarOld from "../Navbar/KNavbarOld";
-
 //// INTERNAL ////
-import KPage from "./KPage";
-import KSection from "./KSection";
-import { setNavbarLinks } from "../redux/actions/act_con";
-import { useTheme } from "../Libs/KThemes";
-//STYLE
-import "../index.css";
+import { KNavbarUncontrolled, KNavbar } from "./Navbar/KNavbar";
+import KPage from "./Atoms/KPage";
+import KSection from "./Atoms/KSection";
+import { mapToNavbar, initAnimListener } from "./redux/actions/act_con";
+import { useTheme } from "./Libs/KThemes";
+import { uuidv4 } from "./Libs/KLib";
 
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+//STYLE
+import "./index.css";
 
 const initIcons = () => {
   let fontAwesome = document.createElement("script");
@@ -37,12 +36,11 @@ html {
 }
 body{
   text-align: center;
-  font-size:1rem;
+  font-size:16px;
   font-family: ${({ theme }) => theme.font}, sans-serif;
   font-weight:500;
   color: ${({ theme }) => theme.colors.text};
   background: ${({ theme }) => theme.colors.body};
-  transition: all 0.50s linear;
 }
 
 a {
@@ -58,6 +56,10 @@ function KSiteBody(props) {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
+    props.initAnimListener();
+  }, []);
+
+  useEffect(() => {
     initNavbarPages();
   }, [children]);
 
@@ -70,21 +72,23 @@ function KSiteBody(props) {
         families: getFonts(),
       },
     });
-  }, [additionalThemes]);
+  }, [additionalThemes, currentTheme]);
 
   //find all pages and sections that have to be shown in navbar
   const initNavbarPages = () => {
     //find all pages
     const pgs = [].concat(children).filter(({ type }) => type === KPage);
 
+    const nav = {};
     //array of links suitable for navbar
-    const navLinks = [];
     pgs.map((pg, index) => {
       if (pg.props.navbar) {
-        navLinks.push({
-          name: pg.props.name || "SET NAME " + index,
-          route: pg.props.route || "/setpath" + index,
-        });
+        const name = pg.props.name || "SET NAME " + index;
+        const route = pg.props.route || "/setpath" + index;
+        nav[uuidv4()] = {
+          name,
+          route,
+        };
       }
 
       //find sections of each page suitable for navbar
@@ -95,22 +99,26 @@ function KSiteBody(props) {
 
         sections.map((sec, i) => {
           if (sec.props.navbar) {
-            navLinks.push({
-              name: sec.props.name || "SET NAME " + i,
-              route: sec.props.route || "#setpath" + i,
-            });
+            const name = sec.props.name || "SET NAME " + i;
+            const route = sec.props.route || "#setpath" + i;
+            nav[uuidv4()] = {
+              name,
+              route,
+            };
           }
         });
       }
     });
 
+    props.mapToNavbar(nav);
     setPages(pgs);
-    props.setNavbarLinks(navLinks);
   };
 
   var navbar;
   if (Array.isArray(children)) {
-    navbar = children.find(({ type }) => type === KNavbarOld);
+    navbar = children.find(
+      ({ type }) => type === KNavbarUncontrolled || type === KNavbar
+    );
   }
 
   return (
@@ -142,7 +150,9 @@ const mapStateToProps = (state) => ({
   context: state.context,
 });
 
-const Body = connect(mapStateToProps, { setNavbarLinks })(KSiteBody);
+const Body = connect(mapStateToProps, { mapToNavbar, initAnimListener })(
+  KSiteBody
+);
 
 function KSite(props) {
   const { children } = props;
