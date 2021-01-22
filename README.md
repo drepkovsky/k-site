@@ -13,10 +13,13 @@ npm install @drepkovsky/k-site --registry=https://npm.pkg.github.com/
 npm install styled-components bootstrap
 ```
 ## Usage
-To successfuly implement k-site you must wrap your app in a KSite wrapper component.
-A KPage component is a wrapper for a single page on your site, by giving it **name** and **route** props,
-your KPage would be recognized by the router. And your **route** prop, will be used as a url relative to your site domain.
-**route** and **name** props are also used by KSection component.By giving your KSection component a **route**, the route will be used as a id of the section
+To successfuly implement k-site package in your project you should wrap your app in a KSite wrapper component.
+The only prime descendant of KSite component should be a KPage component.
+KPage component is used as a wrapper for a single page on your site.
+By giving it **name** and **route** props, KPage component would be recognized by KSite, and added to the KSite router. 
+The **route** prop of KPage, will be used as an url relative to your site domain.
+**Route** and **name** props are also used by KSection components. 
+By giving your KSection component a **route** prop, you are assigning an ID to the given section.
 ```
 import {KSite,KPage} from "@drepkovsky/k-site"
 
