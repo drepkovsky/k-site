@@ -21,17 +21,17 @@ The **route** prop of KPage, will be used as an url relative to your site domain
 **Route** and **name** props are also used by KSection components. 
 By giving your KSection component a **route** prop, you are assigning an ID to the given section.
 ```js
-import {KSite,KPage} from "@drepkovsky/k-site"
+import {KSite,KPage} from "@drepkovsky/k-site";
 
 function App() {
     
-    return <KSite>
+    return (<KSite>
               <KPage name="Home" route="/">
                 <KSection name="About" route="/#about" /> 
                 .....
                 </KSection>
               </KPage>
-      </KSite>
+            </KSite>);
  
 }
 
