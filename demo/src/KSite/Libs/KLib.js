@@ -8,7 +8,7 @@ export function uuidv4() {
   });
 }
 
-export function randStr(len, numbers: true) {
+export function randStr(len, numbers = true) {
   var result = "";
 
   var charset = numbers

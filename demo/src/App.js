@@ -27,9 +27,9 @@ import {
   KForm,
   KInput,
   KFooter,
+  KContainer,
 } from "./KSite";
 import { useState } from "react";
-import KContainer from "./KSite/Atoms/KContainer";
 
 function App() {
   const [people, setPeople] = useState([

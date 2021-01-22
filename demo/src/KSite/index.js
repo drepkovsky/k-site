@@ -23,8 +23,7 @@ import KPage from "./Atoms/KPage";
 import KSection from "./Atoms/KSection";
 import KSpinner from "./Atoms/KSpinner";
 import { KImage, KLazyImage } from "./Atoms/KImage";
-
-///FOOTER
+import KContainer from "./Atoms/KContainer";
 import KFooter from "./Atoms/KFooter";
 
 ///FORMS
@@ -77,6 +76,7 @@ export {
   KImage,
   KLazyImage,
   KFooter,
+  KContainer,
   KForm,
   KInput,
   KGallery,
