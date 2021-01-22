@@ -25,14 +25,15 @@ import {KSite,KPage} from "@drepkovsky/k-site";
 
 function App() {
     
-    return (<KSite>
-              <KPage name="Home" route="/">
+    return (
+        <KSite>
+            <KPage name="Home" route="/">
                 <KSection name="About" route="/#about" /> 
-                .....
+                    .....
                 </KSection>
-              </KPage>
-            </KSite>);
- 
+            </KPage>
+        </KSite>
+    ); 
 }
 
 ```
