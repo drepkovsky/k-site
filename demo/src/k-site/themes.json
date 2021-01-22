@@ -1,0 +1,50 @@
+{
+  "default": {
+    "id": "t_001",
+    "name": "Light",
+    "colors": {
+      "body": "#fff",
+      "text": "#232323",
+      "primary": "#4C7CED",
+      "secondary": "#5f6f76",
+      "disabled": "#d9d9d9",
+      "success": "#00f004",
+      "warning": "#fa9d19",
+      "danger": "#e0061c",
+      "info": "#fae700",
+      "link": "#4C7CED"
+    },
+    "font": "Quicksand",
+    "weights": {
+      "light": 300,
+      "semi-light": 400,
+      "regular": 500,
+      "semi-bold": 600,
+      "bold": 700
+    }
+  },
+  "default-dark": {
+    "id": "t_002",
+    "name": "Dark",
+    "colors": {
+      "body": "#232323",
+      "text": "#fff",
+      "primary": "#4C7CED",
+      "secondary": "#5f6f76",
+      "disabled": "#d9d9d9",
+      "success": "#00f004",
+      "warning": "#fa9d19",
+      "danger": "#e0061c",
+      "info": "#fae700",
+      "link": "#4C7CED"
+    },
+    "font": "Quicksand",
+    "weights": {
+      "light": 300,
+      "semi-light": 400,
+      "regular": 500,
+      "semi-bold": 600,
+      "bold": 700
+    }
+  }
+}

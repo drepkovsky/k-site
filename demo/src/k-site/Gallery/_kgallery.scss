@@ -1,0 +1,91 @@
+.k-gallery {
+  position: relative;
+  width: 100%;
+}
+
+.k-gallery-image-holder {
+  position: relative;
+}
+
+.k-gallery-image-ghost {
+  background: rgb(53, 53, 53);
+  min-height: auto;
+}
+
+.k-gallery-img {
+  width: 100%;
+  max-width: 100%;
+  transition: all 0.1s ease-in-out;
+  opacity: 1;
+  object-fit: cover;
+
+  &:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}
+
+.k-slider-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.k-gallery-modal-body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.k-gallery-img-slider-holder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.k-gallery-img-controls-holder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.k-gallery-img-control {
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  justify-content: center;
+
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.k-gallery-modal {
+  position: absolute;
+
+  .k-gallery-modal-content {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.4);
+  }
+}

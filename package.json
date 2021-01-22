@@ -1,7 +1,7 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.0.4",
-  "description": "KSite is a library.",
+  "version": "1.0.5",
+  "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -27,8 +27,8 @@
   },
   "scripts": {
     "clean": "del /s /q dist",
-    "prepare-build": "npm run clean && babel demo/src/KSite --out-dir dist --ignore '**/*.test.js' ",
-    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist &&  && npx copyfiles \"demo/src/KSite/**/*.css\" ./dist ",
+    "prepare-build": "npm run clean && babel src --out-dir dist --ignore \"**/*.test.js\" ",
+    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist && npx copyfiles \"/src/**/*.css\" ./dist ",
     "build": "npm run prepare-build && npm run copy"
   },
   "eslintConfig": {
