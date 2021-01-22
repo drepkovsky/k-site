@@ -28,7 +28,7 @@ function App() {
     return (
         <KSite>
             <KPage name="Home" route="/">
-                <KSection name="About" route="/#about" /> 
+                <KSection name="About" route="/#about"> 
                     .....
                 </KSection>
             </KPage>
