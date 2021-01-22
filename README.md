@@ -8,7 +8,7 @@ KSite was build upon styled-components.
 ```
 npm install @drepkovsky/k-site --registry=https://npm.pkg.github.com/
 ```
-###Recommended
+### Recommended
 ```
 npm install styled-components bootstrap
 ```
