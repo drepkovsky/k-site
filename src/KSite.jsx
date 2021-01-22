@@ -17,7 +17,7 @@ import { KNavbarUncontrolled, KNavbar } from "./Navbar/KNavbar";
 import KPage from "./Atoms/KPage";
 import KSection from "./Atoms/KSection";
 import { mapToNavbar, initAnimListener } from "./redux/actions/act_con";
-import { useTheme } from "./Libs/KThemes";
+import { useTheme } from "./Theming/KThemes";
 import { uuidv4 } from "./Libs/KLib";
 
 //STYLE

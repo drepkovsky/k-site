@@ -11,7 +11,7 @@ import React, { Fragment, useEffect, useState } from "react";
 // Reactstrap
 
 //// INTERNAL ////
-import { colorAlpha } from "../Libs/KColorPalette";
+import { colorAlpha } from "../Theming/KColorPalette";
 
 import KIcon from "../Atoms/KIcon";
 import { NavLink } from "react-router-dom";

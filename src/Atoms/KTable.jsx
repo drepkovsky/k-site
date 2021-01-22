@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 // React
 import PropTypes from "prop-types";
-import { fixHex, lerpColor } from "../Libs/KColorPalette";
+import { fixHex, lerpColor } from "../Theming/KColorPalette";
 import { component } from "../Libs/styles";
 
 // Reactstrap

@@ -19,7 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { uuidv4 } from "../Libs/KLib";
 import { setFormInput, setFormInputValue } from "../redux/actions/act_form";
 import styled from "styled-components";
-import { getColor, getFontWeight } from "../Libs/KThemes";
+import { getColor, getFontWeight } from "../Theming/KThemes";
 import { component } from "../Libs/styles";
 import KComponent from "../Atoms/KComponent";
 

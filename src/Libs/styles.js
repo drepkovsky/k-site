@@ -1,7 +1,7 @@
 import { result } from "lodash";
 import { css } from "styled-components";
-import { getContrast } from "./KColorPalette";
-import { getColor, getFontWeight } from "./KThemes";
+import { getContrast } from "../Theming/KColorPalette";
+import { getColor, getFontWeight } from "../Theming/KThemes";
 
 export const bootstrapSizes = {
   xs: 0,

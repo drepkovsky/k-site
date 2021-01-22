@@ -1,7 +1,7 @@
 ////// IMPORTS //////
 import styled, { css } from "styled-components";
-import { getContrast } from "../Libs/KColorPalette";
-import { getColor } from "../Libs/KThemes";
+import { getContrast } from "../Theming/KColorPalette";
+import { getColor } from "../Theming/KThemes";
 import { component } from "../Libs/styles";
 
 ////// COMPONENT //////

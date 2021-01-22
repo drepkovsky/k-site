@@ -4,7 +4,7 @@ import styled from "styled-components";
 // React
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { leanToContrast } from "../Libs/KColorPalette";
+import { leanToContrast } from "../Theming/KColorPalette";
 import { component } from "../Libs/styles";
 import KTable from "./KTable";
 

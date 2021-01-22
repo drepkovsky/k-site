@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import _, { map } from "lodash";
-import { colorAlpha, getContrast, isHex } from "./KColorPalette";
-import { css } from "styled-components";
+import { useState } from "react";
 import themesJSON from "../themes.json";
 import colorPallete from "./colors.json";
-import { bootstrapQuery } from "./KLib";
+import _ from "lodash";
 
 export const useTheme = (props) => {
   const themes = themesJSON;
