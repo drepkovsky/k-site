@@ -1,0 +1,11 @@
+{
+  "colors": {},
+  "font": "Quicksand, Roboto",
+  "weights": {
+    "light": 300,
+    "semi-light": 400,
+    "regular": 500,
+    "semi-bold": 600,
+    "bold": 700
+  }
+}

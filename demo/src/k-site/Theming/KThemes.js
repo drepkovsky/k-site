@@ -1,55 +1,76 @@
-import { useState } from "react";
-import themesJSON from "../themes.json";
-import colorPallete from "./colors.json";
+import themeJSON from "../theme.json";
 import _ from "lodash";
+import { generateTheme } from "./KColors";
+import { useState } from "react";
+import { TinyColor } from "@ctrl/tinycolor";
 
-export const useTheme = (props) => {
-  const themes = themesJSON;
-  const [theme, setTheme] = useState(themes.default);
+export const useTheme = () => {
+  const [theme, setTheme] = useState(themeJSON);
 
   const getFonts = () => {
-    const allFonts = _.values(_.mapValues(themes, "font"));
+    const allFonts = theme.font.split(", ");
+    for (let i = 0; i < allFonts.length; i++) {
+      allFonts[i] += ":";
+      Object.keys(theme.weights).map((key, index) => {
+        allFonts[i] += theme.weights[key];
+        if (index < Object.keys(theme.weights).length - 1) allFonts[i] += ",";
+      });
+      console.log(allFonts[i]);
+    }
+    console.log(allFonts);
     return allFonts;
   };
 
-  const mergeThemes = (addThemes) => {
-    Object.keys(addThemes).map((key) => {
-      Object.assign(themes, addThemes[key]);
-    });
-    return themes;
+  const getTheme = (accentColor, optionalColors) => {
+    if (accentColor || optionalColors) {
+      const tmpTheme = themeJSON;
+      tmpTheme.colors = generateTheme(accentColor, optionalColors);
+      return tmpTheme;
+    } else return theme;
   };
 
-  const setCurrentTheme = (themeName) => {
-    if (themes[themeName]) setTheme(themes[themeName]);
-    else console.warn(themeName + " is not a valid theme name");
+  const setMainTheme = (accentColor, optionalColors) => {
+    const tmpTheme = getTheme(accentColor, optionalColors);
+    setTheme(tmpTheme);
+    return tmpTheme;
   };
 
-  return { theme, setCurrentTheme, getFonts, mergeThemes };
+  return { theme, getTheme, setMainTheme, getFonts };
 };
 
 /**
- *
  * @param {Object} theme
  * @param {String} color
  */
-export const getColor = (color, theme = themesJSON.default.id, fallback) => {
+export const getColor = (color, theme) => {
   if (color) {
-    const tmp = color.split("-");
-    if (tmp.length > 1) {
-      return colorPallete[tmp[0]] ? colorPallete[tmp[0]][tmp[1]] : color;
-    }
-    return theme.colors[tmp[0]]
-      ? theme.colors[tmp[0]]
-      : colorPallete[tmp[0]]
-      ? colorPallete[tmp[0]][500]
-        ? colorPallete[tmp[0]][500]
-        : colorPallete[tmp[0]]
-      : fallback
-      ? fallback
-      : color;
-  }
-  return "";
+    return theme.colors[color] ? theme.colors[color] : color;
+  } else return "";
 };
-export const getFontWeight = (weightName, theme = themesJSON.default) => {
+
+export const getLowerColor = (color, theme) => {
+  if (color) {
+    let col = new TinyColor(color);
+    if (theme) {
+      return new TinyColor(theme.colors.background).isLight()
+        ? col.lighten(10)
+        : col.darken(10);
+    }
+    return col.isLight() ? col.lighten(10) : col.darken(10);
+  }
+};
+export const getHigherColor = (color, theme) => {
+  if (color) {
+    let col = new TinyColor(color);
+    if (theme) {
+      return !new TinyColor(theme.colors.background).isLight()
+        ? col.lighten(10)
+        : col.darken(10);
+    }
+    return !col.isLight() ? col.lighten(10) : col.darken(10);
+  }
+};
+
+export const getFontWeight = (weightName, theme) => {
   return theme.weights[weightName] ? theme.weights[weightName] : 500;
 };

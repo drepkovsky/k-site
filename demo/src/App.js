@@ -30,6 +30,8 @@ import {
   KContainer,
 } from "./k-site";
 import { useState } from "react";
+import { presetPalettes, generateTheme } from "./k-site/Theming/KColors";
+import { getContrast } from "./k-site/Theming/KColorPalette";
 
 function App() {
   const [people, setPeople] = useState([
@@ -38,6 +40,12 @@ function App() {
       lastName: "Smith",
       occupancy: "Developer",
       age: "20",
+    },
+    {
+      firstName: "Peter",
+      lastName: "Wood",
+      occupancy: "Worker",
+      age: "35",
     },
   ]);
   const [theme, setTheme] = useState("default");
@@ -69,19 +77,27 @@ function App() {
   };
 
   return (
-    <KSite currentTheme={theme}>
+    <KSite
+      accentColor={"white"}
+      optionalColors={{ primary: "#49aeee" }}
+      currentTheme={theme}>
       <KNavbarUncontrolled
         brand="k-site"
-        color="text"
+        color={"grey-1"}
         fixed
         expand="md"
         bg="transparent"
         py="1"
-        scrolledProps={{ color: "body", bg: "text", elevate: 2, py: "0.8" }}
+        scrolledProps={{
+          color: "background",
+          bg: "grey-10",
+          elevate: 2,
+          py: "0.8",
+        }}
       />
       <KPage name="Home" route="/">
         <KHero
-          gradient={{ colors: ["green-600", "teal-400"], deg: 45 }}
+          gradient={{ colors: ["green-7", "cyan-8"], deg: 45 }}
           color="contrast"
           size="medium"
           text="center">
@@ -118,9 +134,10 @@ function App() {
         </KSection>
         <KSection name="Form" route="/#form" navbar>
           <KContainer>
-            <KRow>
+            <h1>Form</h1>
+            <KRow py="2">
               <KCol md="6">
-                <KCard maxHeight={"250px"}>
+                <KCard maxHeight={"200px"}>
                   <KTableWrapper>
                     <KTable>
                       <KTableHead>

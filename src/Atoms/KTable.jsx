@@ -1,11 +1,12 @@
 ////// IMPORTS //////
 //// EXTERNAL ////
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // React
 import PropTypes from "prop-types";
 import { fixHex, lerpColor } from "../Theming/KColorPalette";
 import { component } from "../Libs/styles";
+import { TinyColor } from "@ctrl/tinycolor";
 
 // Reactstrap
 
@@ -15,7 +16,6 @@ import { component } from "../Libs/styles";
 export const KTableItem = styled.td`
   padding: 0.75rem;
   border-top: 1px solid;
-  border-color: inherit;
   color: inherit;
 
   ${component}
@@ -34,9 +34,9 @@ export const KTableRow = styled.tr`
   ${component}
 `;
 
-export const KTableHead = styled.thead`
-  color: #928d8d;
-
+export const KTableHead = styled.thead.attrs((props) => ({
+  bg: props.bg || props.theme.colors.tableHeader,
+}))`
   ${KTableItem} {
     border-top: 0;
     padding-top: 0.5rem;
@@ -54,39 +54,52 @@ export const KTableHead = styled.thead`
 
 export const KTableBody = styled.tbody`
   background-color: inherit;
+  overflow-y: auto;
+  ${component}
 `;
 
-export const KTable = styled.table`
+export const KTable = styled.table.attrs((props) => ({
+  borderColor: props.borderColor || props.theme.colors.divider,
+  color: props.color || props.theme.colors.text,
+  stripeColor: props.stripeColor || props.theme.colors.tableHeader,
+}))`
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
   text-align: start;
-  ${component}
 
   ${KTableItem} {
-    border-color: ${({ theme }) =>
-      lerpColor(theme.colors.text, theme.colors.body, 0.8)};
+    border-color: ${({ borderColor }) => borderColor};
   }
-
-  ${KTableBody} {
-    ${KTableRow} {
-      &:nth-of-type(odd) {
-        background: transparent;
-      }
-      &:nth-of-type(2n) {
-        background: ${({ theme }) => fixHex(theme.colors.text)}06;
-      }
-    }
-  }
+  ${({ striped = true }) => {
+    if (striped)
+      return css`
+        ${KTableBody} {
+          ${KTableRow} {
+            &:nth-of-type(odd) {
+              background: none;
+            }
+            &:nth-of-type(2n) {
+              background: ${({ stripeColor }) => stripeColor};
+          }
+        }
+      `;
+    else return ``;
+  }}
+  ${component}
 `;
 
-export const KTableWrapper = styled.div`
+export const KTableOverflowWrapper = styled.div`
   overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  ${component}
 `;
 
 KTable.propTypes = {
   className: PropTypes.string,
+  striped: PropTypes.bool,
 };
 
 export default KTable;

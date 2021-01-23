@@ -15,7 +15,7 @@ import {
   KTableHead,
   KTableItem,
   KTableRow,
-  KTableWrapper,
+  KTableOverflowWrapper,
 } from "./Atoms/KTable";
 import KAnimation from "./Atoms/KAnimation";
 import { KRow, KCol } from "./Atoms/KGrid";
@@ -66,7 +66,7 @@ export {
   KTableHead,
   KTableItem,
   KTableRow,
-  KTableWrapper,
+  KTableOverflowWrapper as KTableWrapper,
   KAnimation,
   KRow,
   KCol,

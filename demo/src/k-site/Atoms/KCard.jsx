@@ -6,23 +6,26 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { leanToContrast } from "../Theming/KColorPalette";
 import { component } from "../Libs/styles";
-import KTable from "./KTable";
+import KTable, { KTableItem, KTableRow } from "./KTable";
 
 ////// COMPONENT //////
-export const KCardHeader = styled.div`
+export const KCardHeader = styled.div.attrs((props) => ({
+  bg: props.bg || "none",
+  justifyContent: props.justifyContent || "flex-start",
+}))`
   display: flex;
   flex-direction: row;
   align-items: center;
   min-height: 3rem;
   padding: 0.5rem 1.5rem;
-  background: ${({ background = "none" }) => background};
-  justify-content: ${({ align = "start" }) =>
-    align == "center" ? align : "flex-" + align};
+  background: ${({ bg }) => bg};
+  justify-content: ${({ justifyContent }) => justifyContent};
   border-bottom: ${(divider = true, dividerWidth = "1px") =>
       divider ? dividerWidth : "none"}
     solid;
-  border-color: ${({ borderColor, theme }) =>
-    borderColor || leanToContrast(theme.colors.body || "#000000", 0.1)};
+  border-color: inherit;
+
+  ${component}
 `;
 
 KCardHeader.propTypes = {
@@ -34,20 +37,22 @@ KCardHeader.propTypes = {
   headerOffset: PropTypes.bool,
 };
 
-export const KCardFooter = styled.div`
+export const KCardFooter = styled.div.attrs((props) => ({
+  bg: props.bg || "none",
+  justifyContent: props.justifyContent || "flex-start",
+}))`
   display: flex;
   flex-direction: row;
   align-items: center;
   min-height: 3rem;
   padding: 0.5rem 1.5rem;
-  background: ${({ background = "none" }) => background};
-  justify-content: ${({ align = "end" }) =>
-    align == "center" ? align : "flex-" + align};
+  background: ${({ bg }) => bg};
+  justify-content: ${({ justifyContent }) => justifyContent};
   border-top: ${(divider = true, dividerWidth = "1px") =>
       divider ? dividerWidth : "none"}
     solid;
-  border-color: ${({ borderColor, theme }) =>
-    borderColor || leanToContrast(theme.colors.body || "#000000", 0.1)};
+  border-color: inherit;
+  ${component}
 `;
 
 KCardFooter.propTypes = {
@@ -58,7 +63,13 @@ KCardFooter.propTypes = {
   background: PropTypes.string,
 };
 
-const KCardWrapper = styled.div`
+const KCardWrapper = styled.div.attrs((props) => ({
+  borderColor: props.borderColor || props.theme.colors.border,
+  radius: props.radius || "5px",
+  bg: props.bg || props.theme.colors.background,
+  color: props.bolor || props.theme.colors.text,
+  maxWidth: props.maxWidth || "100",
+}))`
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -71,12 +82,17 @@ const KCardWrapper = styled.div`
   border: ${(border = true, borderWidth = "1px") =>
       border ? borderWidth : "none"}
     solid;
-  border-radius: ${({ radius = "3px" }) => radius};
-  border-color: ${({ theme }) => leanToContrast(theme.colors.body, 0.1)};
-  background-color: ${({ theme }) => leanToContrast(theme.colors.body, 0.02)};
-  color: ${({ theme }) => theme.colors.text};
 
-  max-width: ${({ maxWidth = "100%" }) => maxWidth};
+  ${KTableRow} {
+    ${KTableItem} {
+      :first-child {
+        padding-left: 1.5rem;
+      }
+      :last-child {
+        padding-right: 1.5rem;
+      }
+    }
+  }
 
   ${component}
 `;
@@ -89,6 +105,8 @@ const KCardWithFloaterWrapper = styled(KCardWrapper)`
   ${KCardFooter} {
     padding-bottom: ${({ ver }) => (ver == "end" ? "2rem" : "")};
   }
+
+  ${component}
 `;
 
 export function KCard(props) {
@@ -137,11 +155,14 @@ KCard.propTypes = {
   background: PropTypes.string,
 };
 
-export const KCardBody = styled.div`
-  background: ${({ background = "none" }) => background};
+export const KCardBody = styled.div.attrs((props) => ({
+  bg: props.bg || props.theme.colors.background,
+  p: props.p || "1.15rem",
+}))`
   flex: 1 1 auto;
-  padding: ${({ padding = "1.15rem" }) => padding};
   position: relative;
+
+  ${component}
 `;
 
 KCardBody.propTypes = {
@@ -155,9 +176,13 @@ export const KCardTitle = styled.h3`
   line-height: 1.2;
   font-weight: ${({ theme }) => theme.weights.normal};
   margin: 0;
+
+  ${component}
 `;
 
-export const KCardFloaterWrapper = styled.div`
+export const KCardFloaterWrapper = styled.div.attrs((props) => ({
+  color: props.color || props.theme.colors.text,
+}))`
   position: absolute;
   box-sizing: content-box;
   display: flex;
@@ -167,13 +192,15 @@ export const KCardFloaterWrapper = styled.div`
   min-height: 2.5rem;
   border-radius: 50%;
   border-width: ${({ borderWidth = "2px" }) => borderWidth};
-  background-color: ${({ background = "#fff" }) => background};
-  border-color: ${({ background = "#fff" }) => background};
-  color: ${({ color = "#111" }) => color};
+
+  color: ${({ color }) => color};
+
   left: ${({ left }) => left}%;
   top: ${({ top }) => top}%;
   transform: translate(-50%, -50%);
   padding: 0.2rem 0.2rem;
+
+  ${component}
 `;
 
 export function KCardFloater(props) {

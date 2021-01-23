@@ -25,14 +25,16 @@ import KComponent from "../Atoms/KComponent";
 
 ////// COMPONENT //////
 
-const KInputWrapper = styled.input`
+const KInputWrapper = styled.input.attrs((props) => ({
+  borderColor: props.borderColor || props.theme.colors.border,
+}))`
   padding: 0.5rem 1rem;
   line-height: 1.5rem;
   font-size: 1rem;
-  border: 1px solid ${getColor("gray-300")};
+  border: 1px solid ${({ borderColor }) => borderColor};
   border-radius: 5px;
   color: black;
-  font-weight: ${getFontWeight("regular")};
+  font-weight: ${({ theme }) => getFontWeight("regular", theme)};
 
   &:focus {
     color: #495057;
