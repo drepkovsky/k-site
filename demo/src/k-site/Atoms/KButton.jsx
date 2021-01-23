@@ -1,18 +1,18 @@
 ////// IMPORTS //////
 import styled, { css } from "styled-components";
 import { getContrast } from "../Theming/KColorPalette";
-import { getColor } from "../Theming/KThemes";
+import { getColor, getHigherColor, getLowerColor } from "../Theming/KThemes";
 import { component } from "../Libs/styles";
 
 ////// COMPONENT //////
 
-const KButton = styled.button`
-  color: ${({ theme }) => theme.colors.body};
-  background-color: ${({ theme }) => theme.colors.text};
+const KButton = styled.button.attrs((props) => ({
+  bg: getColor(props.bg, props.theme) || props.theme.colors.text,
+}))`
   border: ${({ border = true }) => (border ? `2px solid` : "")};
-  border-color: ${({ theme }) => theme.colors.text};
+  border-color: ${({ bg }) => bg};
   font-weight: ${({ theme }) => theme.weights.bold};
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   padding: 0.5rem 1.5rem;
   transition: all 0.1s ease-in-out;
   display: inline-flex;
@@ -21,34 +21,22 @@ const KButton = styled.button`
 
   &:hover {
     outline: none;
-    color: ${({ theme }) => theme.colors.text};
-    background-color: ${({ theme }) => theme.colors.body};
+    color: ${({ bg }) => getContrast(bg)};
+    background-color: ${({ bg, theme }) => getLowerColor(bg, theme)};
     border: ${({ border }) => (border ? `2px solid` : "")};
-    border-color: ${({ theme }) => theme.colors.text};
+    border-color: ${({ bg, theme }) => getLowerColor(bg, theme)};
   }
   &:active {
-    opacity: 0.7;
+    background-color: ${({ bg, theme }) => getHigherColor(bg, theme)};
+    border-color: ${({ bg, theme }) => getHigherColor(bg, theme)};
   }
   &:focus {
     outline: none;
   }
-
-  ${({ bg }) => {
-    if (bg)
-      return css`
-        border-color: ${({ bg }) => (bg ? getColor(bg) : "")};
-        color: ${({ bg }) => (bg ? getContrast(getColor(bg)) : "")};
-
-        &:hover{
-          border-color: ${({ bg }) => (bg ? getColor(bg) : "")};
-          color: ${({ bg }) => (bg ? getColor(bg) : "")};
-          }
-        }
-      `;
-    return "";
-  }}
-
   ${component}
+
+  color: ${({ bg, outlined }) => (outlined ? bg : getContrast(bg))};
+  background-color: ${({ bg, outlined }) => (outlined ? "transparent" : bg)};
 `;
 
 ////// EXPORTS //////

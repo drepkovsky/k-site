@@ -9,21 +9,21 @@ import PropTypes from "prop-types";
 // Reactstrap
 import styled, { ThemeProvider } from "styled-components";
 import { component } from "../Libs/styles";
+import { useTheme } from "../Theming/KThemes";
 
 //// INTERNAL ////
 
 ////// COMPONENT //////
-const KSectionWrapper = styled.section`
+const KSectionWrapper = styled.section.attrs((props) => ({
+  // bg: props.bg || props.theme.colors.background,
+  // color: props.color || props.theme.colors.text,
+}))`
   padding-top: 4rem;
-  padding-bottom: 4rem;
-  background-color: ${({ theme }) => theme.colors.body};
-  color: ${({ theme }) => theme.colors.text};
-
   ${component}
 `;
 
 const KSection = (props) => {
-  const { className, customTheme, children, route } = props;
+  const { className, accentColor, optionalColors, children, route } = props;
 
   const [id, setId] = useState("");
 
@@ -36,28 +36,26 @@ const KSection = (props) => {
     }
   }, []);
 
-  const body = () => {
-    return (
-      <KSectionWrapper
-        {...props}
-        id={id}
-        className={`k-section ${className || ""}`}>
-        {children}
-      </KSectionWrapper>
-    );
-  };
+  // useEffect(() => {
+  //   setTheme(getTheme(accentColor, optionalColors));
+  // }, [accentColor, optionalColors]);
 
-  if (customTheme) {
-    return <ThemeProvider theme={customTheme}>{body()}</ThemeProvider>;
-  }
-  return body();
+  return (
+    <KSectionWrapper
+      {...props}
+      id={id}
+      className={`k-section ${className || ""}`}>
+      {children}
+    </KSectionWrapper>
+  );
 };
 
 KSection.propTypes = {
   route: PropTypes.string,
   name: PropTypes.string,
   navbar: PropTypes.bool,
-  customTheme: PropTypes.object,
+  accentColor: PropTypes.string,
+  optionalColors: PropTypes.object,
 };
 
 ////// EXPORTS //////

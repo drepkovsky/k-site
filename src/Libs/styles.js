@@ -1,4 +1,3 @@
-import { result } from "lodash";
 import { css } from "styled-components";
 import { getContrast } from "../Theming/KColorPalette";
 import { getColor, getFontWeight } from "../Theming/KThemes";
@@ -54,7 +53,7 @@ const properties = (props, theme) => {
     theme
   )} ${radius(props)} ${elevation(props)} ${gradient(props, theme)} ${textAlign(
     props
-  )} ${display(props)} ${lineH(props)} ${flex(props)}
+  )} ${display(props)} ${lineH(props)} ${flex(props)} ${positionStyle(props)}
   `;
 };
 
@@ -155,7 +154,7 @@ const active = (props, theme) => {
   return "";
 };
 
-const widthStyle = ({ width, maxWidth }) => {
+const widthStyle = ({ width, maxWidth, minWidth }) => {
   let result = "";
   if (width)
     result += `width: ${unit(width, "%")};
@@ -163,15 +162,21 @@ const widthStyle = ({ width, maxWidth }) => {
   if (maxWidth)
     result += `max-width: ${unit(maxWidth, "%")};
   `;
+  if (minWidth)
+    result += `min-width: ${unit(minWidth, "%")};
+  `;
   return result;
 };
-const heightStyle = ({ height, maxHeight }) => {
+const heightStyle = ({ height, maxHeight, minHeight }) => {
   let result = "";
   if (height)
     result += `height: ${unit(height, "%")};
   `;
   if (maxHeight)
     result += `max-height: ${unit(maxHeight, "%")};
+  `;
+  if (minHeight)
+    result += `min-height: ${unit(minHeight, "%")};
   `;
   return result;
 };
@@ -202,9 +207,10 @@ const colors = ({ gradient, color, bg, borderColor }, theme) => {
     if (borderColor == "contrast") tmpBc = getContrast(tmpBg);
   }
   if (gradient) {
-    if (color == "contrast") tmpC = getContrast(getColor(gradient.colors[0]));
+    if (color == "contrast")
+      tmpC = getContrast(getColor(gradient.colors[0], theme));
     if (borderColor == "contrast")
-      tmpBc = getContrast(getColor(gradient.colors[0]));
+      tmpBc = getContrast(getColor(gradient.colors[0], theme));
   }
 
   result += col(tmpC);
@@ -317,5 +323,9 @@ const alignItemsStyle = ({ alignItems }) => {
 };
 const alignSelfStyle = ({ alignSelf }) => {
   if (alignSelf) return `align-self: ${alignSelf};`;
+  return "";
+};
+const positionStyle = ({ position }) => {
+  if (position) return `position: ${position};`;
   return "";
 };

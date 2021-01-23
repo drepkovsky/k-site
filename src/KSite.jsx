@@ -7,7 +7,7 @@ import WebFont from "webfontloader";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 // React
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -35,12 +35,33 @@ html {
   scroll-behavior: smooth;
 }
 body{
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   text-align: center;
   font-size:16px;
+  font-weight: ${({ theme }) => theme.weights.regular};
   font-family: ${({ theme }) => theme.font}, sans-serif;
-  font-weight:500;
-  color: ${({ theme }) => theme.colors.text};
-  background: ${({ theme }) => theme.colors.body};
+*{
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: ${({ theme }) => theme.colors["background-8"]};
+  border-radius:3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background:  ${({ theme }) => theme.colors["background-7"]};
+  border-radius:3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: ${({ theme }) => theme.colors["background-6"]};
+}
+}
+
 }
 
 a {
@@ -51,9 +72,10 @@ a {
 `;
 
 function KSiteBody(props) {
-  const { children, additionalThemes = {}, currentTheme = "default" } = props;
-  const { theme, mergeThemes, getFonts, setCurrentTheme } = useTheme();
+  const { children, optionalColors, accentColor } = props;
+  const { getFonts, getTheme, setMainTheme } = useTheme();
   const [pages, setPages] = useState([]);
+  const [theme, setTheme] = useState();
 
   useEffect(() => {
     props.initAnimListener();
@@ -64,15 +86,14 @@ function KSiteBody(props) {
   }, [children]);
 
   useEffect(() => {
-    mergeThemes(additionalThemes);
-    setCurrentTheme(currentTheme);
+    setTheme(setMainTheme(accentColor, optionalColors));
 
     WebFont.load({
       google: {
         families: getFonts(),
       },
     });
-  }, [additionalThemes, currentTheme]);
+  }, [optionalColors, accentColor]);
 
   //find all pages and sections that have to be shown in navbar
   const initNavbarPages = () => {
@@ -121,29 +142,33 @@ function KSiteBody(props) {
     );
   }
 
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <div className="k-site">
-        {navbar}
-        <BrowserRouter>
-          {pages.map((pg, index) => {
-            return (
-              <Switch key={index}>
-                <Route
-                  path={pg.props.route}
-                  exact
-                  render={() => {
-                    return pg;
-                  }}
-                />
-              </Switch>
-            );
-          })}
-        </BrowserRouter>
-      </div>
-    </ThemeProvider>
-  );
+  console.log(theme);
+
+  if (theme)
+    return (
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <div className="k-site">
+          {navbar}
+          <BrowserRouter>
+            {pages.map((pg, index) => {
+              return (
+                <Switch key={index}>
+                  <Route
+                    path={pg.props.route}
+                    exact
+                    render={() => {
+                      return pg;
+                    }}
+                  />
+                </Switch>
+              );
+            })}
+          </BrowserRouter>
+        </div>
+      </ThemeProvider>
+    );
+  return "";
 }
 
 const mapStateToProps = (state) => ({
@@ -169,8 +194,8 @@ function KSite(props) {
 }
 
 KSite.propTypes = {
-  additionalThemes: PropTypes.object,
-  currentTheme: PropTypes.string,
+  optionalColors: PropTypes.object,
+  accentColor: PropTypes.string,
 };
 
 export default KSite;
