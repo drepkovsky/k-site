@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "repository": {
@@ -67,8 +67,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "babel-plugin-styled-components": "^1.12.0",
-    "bootstrap": "^4.5.3",
-    "copyfiles": "^2.4.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
