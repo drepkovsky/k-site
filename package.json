@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "repository": {
@@ -22,7 +22,6 @@
     "url": "https://github.com/drepkovsky/k-site/issues"
   },
   "homepage": "https://github.com/drepkovsky/k-site#readme",
-  "dependencies": {},
   "scripts": {
     "clean": "del /s /q dist",
     "prepare-build": "npm run clean && babel src --out-dir dist --extensions .ts --extensions .tsx --extensions .js --extensions .jsx --ignore \"**/*.test.js\" ",
@@ -49,36 +48,10 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.12.7",
-    "@ctrl/tinycolor": "^3.3.3",
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@types/jest": "^26.0.20",
-    "@types/node": "^14.14.22",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "lodash": "^4.17.20",
-    "styled-components": "^5.2.1",
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "babel-plugin-styled-components": "^1.12.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-redux": "^7.2.2",
-    "react-scripts": "4.0.1",
-    "reactstrap": "^8.8.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "sass": "^1.30.0",
-    "web-vitals": "^0.2.4",
-    "webfontloader": "^1.6.28"
-  },
-  "directories": {
-    "example": "example"
+    "@babel/preset-react": "^7.12.10"
   }
 }
