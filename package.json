@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "repository": {
@@ -25,7 +25,7 @@
   "scripts": {
     "clean": "del /s /q dist",
     "prepare-build": "npm run clean && babel src --out-dir dist --extensions .ts --extensions .tsx --extensions .js --extensions .jsx --ignore \"**/*.test.js\" ",
-    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist && npx copyfiles \"/src/**/*.css\" ./dist ",
+    "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles \"/src/**/*.css\" ./dist ",
     "build": "npm run prepare-build && npm run copy"
   },
   "eslintConfig": {
@@ -52,6 +52,36 @@
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10"
+    "@babel/preset-react": "^7.12.10",
+    "@types/lodash": "^4.14.168",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.7",
+    "@types/webfontloader": "^1.6.32",
+    "babel-plugin-styled-components": "^1.12.0",
+    "@ctrl/tinycolor": "^3.3.3",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "bootstrap": "^4.5.3",
+    "concurrently": "^5.3.0",
+    "cpx": "^1.5.0",
+    "lodash": "^4.17.20",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "sass": "^1.32.0",
+    "styled-components": "^5.2.1",
+    "typescript": "^4.1.3",
+    "web-vitals": "^0.2.4",
+    "webfontloader": "^1.6.28"
   }
 }
