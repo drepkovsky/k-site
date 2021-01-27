@@ -10,7 +10,7 @@ import { KStatefulComponentProps, unit } from "./../Theming/KStyles";
 
 ////// COMPONENT //////
 
-interface KCardHeaderAndFooterProps {
+export interface KCardHeaderAndFooterProps {
   divider?: boolean;
   dividerWidth?: string;
 }

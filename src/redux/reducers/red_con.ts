@@ -7,7 +7,7 @@ const initialState: ContextState = {
   animations: {},
 };
 
-interface ContextState {
+export interface ContextState {
   nav: NavProps;
   observer?: IntersectionObserver;
   animations: { [key: string]: string };
