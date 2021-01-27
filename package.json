@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "repository": {
@@ -22,12 +22,10 @@
     "url": "https://github.com/drepkovsky/k-site/issues"
   },
   "homepage": "https://github.com/drepkovsky/k-site#readme",
-  "dependencies": {
-    "bootstrap": "^4.5.3"
-  },
+  "dependencies": {},
   "scripts": {
     "clean": "del /s /q dist",
-    "prepare-build": "npm run clean && babel src --out-dir dist --ignore \"**/*.test.js\" ",
+    "prepare-build": "npm run clean && babel src --out-dir dist --extensions .ts --extensions .tsx --extensions .js --extensions .jsx --ignore \"**/*.test.js\" ",
     "copy": "npx copyfiles package.json dist && npx copyfiles README.md dist && npx copyfiles .npmrc dist && npx copyfiles \"/src/**/*.css\" ./dist ",
     "build": "npm run prepare-build && npm run copy"
   },
@@ -50,8 +48,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.12.7",
+    "@ctrl/tinycolor": "^3.3.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "lodash": "^4.17.20",
     "styled-components": "^5.2.1",
     "@babel/cli": "^7.12.10",
@@ -66,7 +70,6 @@
     "bootstrap": "^4.5.3",
     "copyfiles": "^2.4.1",
     "react": "^17.0.1",
-    "react-datepicker": "^3.3.0",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",

@@ -1,13 +1,7 @@
 import {
   KPage,
   KSite,
-  KHeader,
-  KCardBody,
   KCard,
-  KCardHeader,
-  KCardFloater,
-  KCardTitle,
-  KCardFooter,
   KIcon,
   KTable,
   KTableHead,
@@ -23,15 +17,29 @@ import {
   KAnimation,
   KRow,
   KCol,
-  KTableWrapper,
   KForm,
   KInput,
   KFooter,
   KContainer,
+  Display1,
+  Paragraph,
+  H1,
+  H2,
+  KModalFooter,
+  KModalHeader,
+  KModal,
+  KModalBody,
+  Overlay,
+  KDatePicker,
+  KDropdownContent,
+  KDropdownWrapper,
+  KCardTitle,
+  KCardHeader,
+  KCardBody,
+  KInputDate,
 } from "./k-site";
 import { useState } from "react";
-import { presetPalettes, generateTheme } from "./k-site/Theming/KColors";
-import { getContrast } from "./k-site/Theming/KColorPalette";
+import { DateUtils } from "react-day-picker";
 
 function App() {
   const [people, setPeople] = useState([
@@ -49,8 +57,11 @@ function App() {
     },
   ]);
   const [theme, setTheme] = useState("default");
+  const [isOpen, setOpen] = useState(false);
+  const [isDrOpen, setDrOpen] = useState(true);
 
   const onAdd = (e) => {
+    console.log(e);
     if (e) {
       const tmpPeople = people;
       tmpPeople.push({
@@ -61,6 +72,10 @@ function App() {
       });
       setPeople([...tmpPeople]);
     }
+  };
+
+  const toggle = () => {
+    setOpen(!isOpen);
   };
 
   const Switch = (props) => {
@@ -78,16 +93,17 @@ function App() {
 
   return (
     <KSite
-      accentColor={"white"}
+      accentColor={"#1f1f1f"}
       optionalColors={{ primary: "#49aeee" }}
       currentTheme={theme}>
       <KNavbarUncontrolled
         brand="k-site"
-        color={"grey-1"}
-        fixed
+        brandLink="/"
+        position="fixed"
         expand="md"
         bg="transparent"
         py="1"
+        color="white"
         scrolledProps={{
           color: "background",
           bg: "grey-10",
@@ -97,24 +113,28 @@ function App() {
       />
       <KPage name="Home" route="/">
         <KHero
-          gradient={{ colors: ["green-7", "cyan-8"], deg: 45 }}
-          color="contrast"
-          size="medium"
-          text="center">
+          color="grey-10"
+          size="fullheight"
+          text="center"
+          bgImg="http://www.chatacerenka.sk/assets/images/cerenkastranka-1920x1080.jpg"
+          bgPosition="50% 50%"
+          bgRepeat="no-repeat"
+          bgSize="cover">
           <KHeroBody px="0.5">
             <KContainer>
               <KAnimation anim={["fadeIn 0.5s ease", "up 0.5s ease"]}>
-                <h1 className="display-1">Welcome to k-site.</h1>
-                <h2>Lorem Ipsum is simply dummy text.</h2>
+                <Display1 color="white">Welcome to k-site.</Display1>
+                <H2>Lorem Ipsum is a dummy text.</H2>
               </KAnimation>
             </KContainer>
+            <Overlay opacity={0.5} />
           </KHeroBody>
         </KHero>
         <KSection name="About" route="/#about" navbar>
           <KContainer>
             <KAnimation anim={["fadeIn 0.5s ease", "up 0.5s ease"]}>
-              <h1 className="text-center"> About us !</h1>
-              <p className="text-justify">
+              <H1 text="center"> About us !</H1>
+              <Paragraph text="justify">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Consectetur adipisci quos repellat assumenda magnam illum
                 quaerat ratione odit, nihil, illo perferendis aperiam,
@@ -128,42 +148,51 @@ function App() {
                 quisquam odio exercitationem officia ut. Distinctio repellat
                 tenetur, optio corrupti eos perferendis eveniet beatae deserunt,
                 tempore inventore, facere aperiam.
-              </p>
+              </Paragraph>
             </KAnimation>
           </KContainer>
         </KSection>
         <KSection name="Form" route="/#form" navbar>
           <KContainer>
+            <KModal centered={true} isOpen={isOpen} toggle={toggle}>
+              <KModalHeader>This is a modal.</KModalHeader>
+              <KModalBody>This is body of a modal</KModalBody>
+              <KModalFooter></KModalFooter>
+            </KModal>
             <h1>Form</h1>
             <KRow py="2">
               <KCol md="6">
-                <KCard maxHeight={"200px"}>
-                  <KTableWrapper>
-                    <KTable>
-                      <KTableHead>
-                        <KTableRow>
-                          <KTableItem>#</KTableItem>
-                          <KTableItem>FirstName</KTableItem>
-                          <KTableItem>LastName</KTableItem>
-                          <KTableItem>Age</KTableItem>
-                          <KTableItem>Occupancy</KTableItem>
-                        </KTableRow>
-                      </KTableHead>
-                      <KTableBody>
-                        {people.map((person, index) => {
-                          return (
-                            <KTableRow key={index}>
-                              <KTableItem>{index}</KTableItem>
-                              <KTableItem>{person.firstName}</KTableItem>
-                              <KTableItem>{person.lastName}</KTableItem>
-                              <KTableItem>{person.age}</KTableItem>
-                              <KTableItem>{person.occupancy}</KTableItem>
-                            </KTableRow>
-                          );
-                        })}
-                      </KTableBody>
-                    </KTable>
-                  </KTableWrapper>
+                <KCard maxH={"200px"} overflow="auto">
+                  <KTable>
+                    <KTableHead>
+                      <KTableRow>
+                        <KTableItem>#</KTableItem>
+                        <KTableItem>FirstName</KTableItem>
+                        <KTableItem>LastName</KTableItem>
+                        <KTableItem>Age</KTableItem>
+                        <KTableItem>Occupancy</KTableItem>
+                      </KTableRow>
+                    </KTableHead>
+                    <KTableBody>
+                      {people.map((person, index) => {
+                        return (
+                          <KTableRow key={index}>
+                            <KTableItem>{index}</KTableItem>
+                            <KTableItem>{person.firstName}</KTableItem>
+                            <KTableItem>{person.lastName}</KTableItem>
+                            <KTableItem>{person.age}</KTableItem>
+                            <KTableItem>{person.occupancy}</KTableItem>
+                          </KTableRow>
+                        );
+                      })}
+                    </KTableBody>
+                  </KTable>
+                </KCard>
+                <KCard mt="2">
+                  <KCardHeader divider={false}>
+                    <KCardTitle>Peter</KCardTitle>
+                  </KCardHeader>
+                  <KCardBody>body</KCardBody>
                 </KCard>
               </KCol>
               <KCol md="6">
@@ -194,6 +223,10 @@ function App() {
                         placeholder="20"
                         type="number"
                         required
+                        errorMessage="Age has to be even."
+                        validation={(e) => {
+                          return e % 2 == 0;
+                        }}
                       />
                     </KCol>
                     <KCol md="6">
@@ -203,6 +236,22 @@ function App() {
                         placeholder="worker"
                         type="text"
                         required
+                      />
+                    </KCol>
+                    <KCol md="6">
+                      <KInputDate label="Datum" name="date" />
+                    </KCol>
+                    <KCol md="6">
+                      <KInputDate
+                        isRangeSelect
+                        label="Datum Range"
+                        name="dateRange"
+                        validation={(e) => {
+                          if (e[0])
+                            return DateUtils.isDayBefore(e[0], new Date());
+                          return false;
+                        }}
+                        errorMessage="Najneskôr od 27.1"
                       />
                     </KCol>
                   </KRow>
@@ -221,7 +270,7 @@ function App() {
             <KAnimation anim={["fadeIn 0.5s ease-in", "up 0.5s ease"]}>
               <KFooter>
                 <h1>Footer</h1>
-                <p className="text-justify">
+                <Paragraph display="">
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem Ipsum has been the industry's
                   standard dummy text ever since the 1500s, when an unknown
@@ -232,7 +281,7 @@ function App() {
                   the release of Letraset sheets containing Lorem Ipsum
                   passages, and more recently with desktop publishing software
                   like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                </Paragraph>
               </KFooter>
             </KAnimation>
           </KContainer>
@@ -252,6 +301,7 @@ function App() {
 
 const getRandomImages = (count) => {
   const sizes = ["/1920/1080/", "/1080/1920/", "/2000/1500/", "/1500/1500/"];
+  const thumbnail = "/400/300/";
   const imgs = [];
   for (let i = 0; i < count; i++) {
     let a = Math.floor(Math.random() * 5000);
@@ -260,6 +310,7 @@ const getRandomImages = (count) => {
         "https://picsum.photos/seed/" +
         a +
         sizes[Math.floor(Math.random() * sizes.length)],
+      thumbnailSrc: "https://picsum.photos/seed/" + a + thumbnail,
       description: "img " + a,
       tags: ["tag"],
     });

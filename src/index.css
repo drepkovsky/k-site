@@ -1,0 +1,107 @@
+.k-gallery {
+  position: relative;
+  width: 100%;
+}
+
+.k-gallery-image-holder {
+  position: relative;
+}
+
+.k-gallery-image-ghost {
+  background: #353535;
+  min-height: auto;
+}
+
+.k-gallery-img {
+  width: 100%;
+  max-width: 100%;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  opacity: 1;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.k-gallery-img:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.k-slider-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.k-gallery-modal-body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.k-gallery-img-slider-holder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.k-gallery-img-controls-holder {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.k-gallery-img-control {
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+}
+
+.k-gallery-img-control:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.k-gallery-img-control:active {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.k-gallery-modal {
+  position: absolute;
+}
+
+.k-gallery-modal .k-gallery-modal-content {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  -webkit-box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.4);
+          box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.4);
+}
+/*# sourceMappingURL=index.css.map */

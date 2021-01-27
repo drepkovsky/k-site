@@ -20,56 +20,95 @@ import { mapToNavbar, initAnimListener } from "./redux/actions/act_con";
 import { useTheme } from "./Theming/KThemes";
 import { uuidv4 } from "./Libs/KLib";
 
+import { Display1, Display2, Display3, Display4 } from "./Atoms/KComponent";
+
 //STYLE
 import "./index.css";
 
+const GlobalStyles = createGlobalStyle`
+  html {
+    scroll-behavior: smooth;
+  }
+  body{
+    margin:0;
+    line-height: 1.5;
+    text-align: center;
+    font-size:16px;
+    font-weight: ${({ theme }) => theme.weights.regular};
+    font-family: ${({ theme }) => theme.font}, sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+
+  *{
+    box-sizing:border-box;
+    }
+
+  }
+
+  h1,h2,h3,h4,h5{
+    margin-bottom: 0.5rem;
+    margin-top:0;
+    font-weight: ${({ theme }) => theme.weights.regular};
+    line-height: 1.2;
+  }
+
+  h1{
+    font-size: 2.5rem;
+  }
+  h2{
+    font-size: 2rem;
+  }
+  h3{
+    font-size: 1.75rem;
+  }
+  h4{
+    font-size: 1.5rem;
+  }
+  h5{
+    font-size: 1.25rem;
+  }
+
+  @media (max-width: 1200px) {
+    h1{
+      font-size: calc(1.375rem + 1.5vw);
+    }
+    h2{
+      font-size: calc(1.325rem + 0.9vw);
+    }
+    h3{
+      font-size: calc(1.3rem + 0.6vw);
+    }
+    h4{
+      font-size: calc(1.275rem + 0.3vw);
+    }
+
+    ${Display1}{
+      font-size: calc(1.725rem + 5.7vw);
+    }
+    ${Display2}{
+      font-size: calc(1.675rem + 5.1vw);
+    }
+    ${Display3}{
+      font-size: calc(1.575rem + 3.9vw);
+    }
+    ${Display4}{
+      font-size: calc(1.475rem + 2.7vw);
+    }
+  }
+
+  a {
+      text-decoration:none;
+      color: ${({ theme }) => theme.colors.link};
+      cursor: pointer;
+    }
+
+  `;
 const initIcons = () => {
   let fontAwesome = document.createElement("script");
   fontAwesome.src = "https://kit.fontawesome.com/556066db54.js";
   fontAwesome.crossOrigin = "anonymous";
   document.body.appendChild(fontAwesome);
 };
-
-export const GlobalStyles = createGlobalStyle`
-html {
-  scroll-behavior: smooth;
-}
-body{
-  background-color: ${({ theme }) => theme.colors.background};
-  color: ${({ theme }) => theme.colors.text};
-  text-align: center;
-  font-size:16px;
-  font-weight: ${({ theme }) => theme.weights.regular};
-  font-family: ${({ theme }) => theme.font}, sans-serif;
-*{
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: ${({ theme }) => theme.colors["background-8"]};
-  border-radius:3px;
-}
-
-::-webkit-scrollbar-thumb {
-  background:  ${({ theme }) => theme.colors["background-7"]};
-  border-radius:3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: ${({ theme }) => theme.colors["background-6"]};
-}
-}
-
-}
-
-a {
-    color: ${({ theme }) => theme.colors.link};
-    cursor: pointer;
-  }
-
-`;
 
 function KSiteBody(props) {
   const { children, optionalColors, accentColor } = props;
@@ -141,8 +180,6 @@ function KSiteBody(props) {
       ({ type }) => type === KNavbarUncontrolled || type === KNavbar
     );
   }
-
-  console.log(theme);
 
   if (theme)
     return (
