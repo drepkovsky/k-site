@@ -6,7 +6,7 @@ KSite was build upon styled-components library.
 
 ## Install
 ```
-npm install @drepkovsky/k-site --registry=https://npm.pkg.github.com/
+npm i @drepkovsky/k-site --registry=https://npm.pkg.github.com/
 ```
 ### Recommended
 ```
