@@ -25,7 +25,7 @@ export interface GalleryImage {
   height?: number;
 }
 
-interface KGallerySliderProps {
+export interface KGallerySliderProps {
   fullscreen?: boolean;
   images: GalleryImage[];
   startIndex: number;
@@ -209,7 +209,7 @@ export const KGallerySlider: FC<KGallerySliderProps> = (props) => {
       return (
         <KModal
           toggle={toggleModal}
-          bodyProps={{ position: "relative", w: 100, height: 100 }}
+          bodyProps={{ position: "relative", w: 100, h: 100 }}
           isOpen={isModalOpen}
           centered={true}>
           <div

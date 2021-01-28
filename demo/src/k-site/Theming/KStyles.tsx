@@ -16,7 +16,7 @@ export interface KComponentProps {
   w?: number | string;
   maxW?: number | string;
   minW?: number | string;
-  height?: number | string;
+  h?: number | string;
   maxH?: number | string;
   minH?: number | string;
 
@@ -231,12 +231,10 @@ const responsive = (props: KResponsiveComponentProps) => {
     `;
   }
   if (sm) {
-    console.log(sm);
     result += `
     ${bootstrapQueryMin.sm}{
       ${properties({ ...sm, theme: props.theme })}
     } `;
-    console.log(result);
   }
   if (md) {
     result += `
@@ -308,7 +306,7 @@ const widthStyle = ({
   return result;
 };
 const heightStyle = ({
-  height,
+  h: height,
   maxH: maxHeight,
   minH: minHeight,
 }: KComponentProps) => {

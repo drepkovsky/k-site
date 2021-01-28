@@ -15,11 +15,11 @@ export const KHeroBody = styled.div<KStatefulComponentProps>`
   ${component}
 `;
 
-interface Sizes {
+export interface HeroSizes {
   size?: "medium" | "large" | "fullheight";
 }
 
-export const KHero = styled.div<KStatefulComponentProps & Sizes>`
+export const KHero = styled.div<KStatefulComponentProps & HeroSizes>`
   position: relative;
   width: 100%;
 

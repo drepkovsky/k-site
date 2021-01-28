@@ -1,7 +1,7 @@
 ////// IMPORTS //////
 import styled from "styled-components";
 import { component } from "../Theming/KStyles";
-import React, { useState, useEffect, HTMLAttributes } from "react";
+import React, { useState, useEffect } from "react";
 import { Ghost } from "./KComponent";
 import { KStatefulComponentProps } from "./../Theming/KStyles";
 
@@ -35,7 +35,7 @@ export const KLazyImage: React.FC<
 
   if (sourceLoaded) {
     return <KImage {...props} />;
-  } else return <Ghost minH="300px" w={100} height={100}></Ghost>;
+  } else return <Ghost minH="300px" w={100} h={100}></Ghost>;
 };
 
 ////// EXPORTS //////

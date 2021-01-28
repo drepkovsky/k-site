@@ -1,7 +1,6 @@
 ////// IMPORTS //////
 //// EXTERNAL ////
 import styled, { css } from "styled-components";
-
 // React
 import { component, KStatefulComponentProps } from "../Theming/KStyles";
 

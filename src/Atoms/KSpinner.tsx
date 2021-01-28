@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { KStatefulComponentProps } from "../Theming/KStyles";
 import KAnimation from "./KAnimation";
 import KIcon from "./KIcon";
+import React from "react";
 
 const KSpinner: React.FC<
   KStatefulComponentProps & { size?: string | number }

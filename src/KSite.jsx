@@ -7,7 +7,7 @@ import WebFont from "webfontloader";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 // React
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -103,11 +103,18 @@ const GlobalStyles = createGlobalStyle`
     }
 
   `;
-const initIcons = () => {
+const initDependencies = () => {
+  //font awesome
   let fontAwesome = document.createElement("script");
   fontAwesome.src = "https://kit.fontawesome.com/556066db54.js";
   fontAwesome.crossOrigin = "anonymous";
   document.body.appendChild(fontAwesome);
+
+  //datePicker
+  let datePickerCss = document.createElement("link");
+  datePickerCss.rel = "stylesheet";
+  datePickerCss.href = "https://unpkg.com/react-day-picker/lib/style.css";
+  document.head.appendChild(datePickerCss);
 };
 
 function KSiteBody(props) {
@@ -220,8 +227,8 @@ function KSite(props) {
   const { children } = props;
 
   useEffect(() => {
-    initIcons();
-  });
+    initDependencies();
+  }, []);
 
   return (
     <Provider store={store}>

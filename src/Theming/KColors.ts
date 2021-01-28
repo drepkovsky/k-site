@@ -49,7 +49,7 @@ const neutralMap = {
   tableHeader: 0.02,
 };
 
-interface RGB {
+export interface RGB {
   r: number;
   g: number;
   b: number;
@@ -72,7 +72,7 @@ const darkColorMap = [
   { index: 1, opacity: 0.98 },
 ];
 
-interface PresetPalette {
+export interface PresetPalette {
   [key: string]: string[];
 }
 
@@ -128,17 +128,19 @@ function generateTheme(
 
   //generating palete for optionalColors
   var optional = {};
-  Object.keys(optionalColors).map((key) => {
-    const col = generate(optionalColors[key], {
-      isDark: bgCol.isDark(),
-      backgroundColor: neutrals.background,
-    });
+  if (optionalColors) {
+    Object.keys(optionalColors).map((key) => {
+      const col = generate(optionalColors[key], {
+        isDark: bgCol.isDark(),
+        backgroundColor: neutrals.background,
+      });
 
-    const obj = {
-      [key]: col,
-    };
-    Object.assign(optional, obj);
-  });
+      const obj = {
+        [key]: col,
+      };
+      Object.assign(optional, obj);
+    });
+  }
 
   var colors: { [key: string]: string | string[] } = {};
   if (bgCol.isDark()) {
@@ -250,7 +252,7 @@ function getValue(hsv: HSV, i: number, light = true) {
   return Number(value.toFixed(2));
 }
 
-interface Opts {
+export interface Opts {
   isDark?: boolean;
   backgroundColor?: string;
 }

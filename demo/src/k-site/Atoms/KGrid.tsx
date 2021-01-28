@@ -14,12 +14,12 @@ export const KRow = styled.div.attrs((props: KStatefulComponentProps) => ({
 
 type Col = string | number | ColObj;
 
-interface ColObj {
+export interface ColObj {
   offset?: string | number;
   size?: string | number;
 }
 
-interface KColProps {
+export interface KColProps {
   xs?: Col;
   sm?: Col;
   md?: Col;

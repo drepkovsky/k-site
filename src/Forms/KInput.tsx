@@ -16,6 +16,7 @@ import { Div } from "./../Atoms/KComponent";
 import { KDropdownContent, KDropdownWrapper } from "../Atoms/KDropdown";
 import { KDatePicker, KDatePickerOutput } from "./KDatepicker";
 
+import { parse, format as formatFunc } from "date-fns";
 ////// COMPONENT //////
 
 const KInputWrapper = styled.input.attrs((props: KStatefulComponentProps) => ({
@@ -78,7 +79,7 @@ const KInputLabel = styled.label<KStatefulComponentProps>`
   }
 `;
 
-interface KInputCommonProps extends KStatefulComponentProps {
+export interface KInputCommonProps extends KStatefulComponentProps {
   wrapperClassName?: string;
   labelClassName?: string;
   label?: string;
@@ -86,10 +87,10 @@ interface KInputCommonProps extends KStatefulComponentProps {
   errorMessage?: string;
   required: boolean;
   disabled?: boolean;
-  validation?: ((e: InputValue) => boolean) | Array<(e: InputValue) => boolean>;
+  validation?: (e: InputValue) => boolean;
 }
 
-interface KInputProps extends KInputCommonProps {
+export interface KInputProps extends KInputCommonProps {
   type: string;
   readOnly: boolean;
 }
@@ -117,13 +118,7 @@ export const KInput: FC<
   const isValid = (value: InputValue) => {
     let response = true;
     if (validation) {
-      if (Array.isArray(validation)) {
-        validation.forEach((validationFunc) => {
-          if (!validationFunc(value)) response = false;
-        });
-      } else {
-        response = validation(value);
-      }
+      response = validation(value);
     }
     setValid(response);
     return response;
@@ -162,7 +157,6 @@ export const KInput: FC<
           {...props}
           className={classes}
           id={id}
-          required
           name={id}
           onChange={onChange}></KInputWrapper>
         {!valid && errorMessage && (
@@ -177,7 +171,9 @@ export const KInput: FC<
 };
 
 interface KInputDateProps extends KInputCommonProps {
-  isRangeSelect: boolean;
+  isRangeSelect?: boolean;
+  allowPast?: boolean;
+  format?: string;
 }
 
 export const KInputDate: FC<
@@ -193,13 +189,17 @@ export const KInputDate: FC<
     className,
     required,
     isRangeSelect,
+    allowPast,
+    defaultValue,
+    format = "yyyy/MM/dd",
   } = props;
 
   const [id, setId] = useState("");
   const [valid, setValid] = useState(true);
   const [isOpen, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string | undefined>();
   const [rawValue, setRawValue] = useState<KDatePickerOutput>();
+  const [defaultDates, setDefaultDates] = useState<Date[] | undefined>();
 
   const ref = useRef<HTMLInputElement>(null);
   const { setInput, setInputValue } = useForm();
@@ -207,17 +207,26 @@ export const KInputDate: FC<
   const isValid = (date: InputValue) => {
     let response = true;
 
-    if (validation) {
-      if (Array.isArray(validation)) {
-        validation.forEach((validationFunc) => {
-          if (!validationFunc(date)) response = false;
-        });
-      } else response = validation(date);
-    }
+    if (validation) response = validation(date);
 
     setValid(response);
     return response;
   };
+
+  useEffect(() => {
+    if (typeof defaultValue === "string") {
+      const dateStrings = defaultValue.split(" - ");
+      const dates: Date[] = [];
+      dateStrings.map((dateStr) => {
+        const date = parse(dateStr, format, new Date());
+        dates.push(date);
+      });
+      setValue(defaultValue);
+      console.log(dateStrings);
+      console.log(dates);
+      setDefaultDates(dates);
+    }
+  }, [defaultValue]);
 
   const toggle = () => {
     setOpen(!isOpen);
@@ -230,7 +239,7 @@ export const KInputDate: FC<
       setInput(tmpId, { isValid, required, value: rawValue || null, name });
   }, []);
 
-  const classes = `${className} ${!valid ? "error" : ""}`;
+  const classes = `${className || ""} ${!valid ? "error" : ""}`;
 
   const onDateChange = (e: KDatePickerOutput) => {
     let val = "";
@@ -238,12 +247,12 @@ export const KInputDate: FC<
     for (let i = 0; i < e.length; i++) {
       if (e[i]) {
         if (i === 1) val += " - ";
-        val += e[i].toLocaleDateString();
+        val += formatFunc(e[i], format);
       }
     }
     setRawValue(e);
     if (setInputValue) setInputValue(id, e || null);
-    setValue(val);
+    setValue(val || undefined);
   };
 
   const result = (
@@ -265,15 +274,20 @@ export const KInputDate: FC<
             {...props}
             className={classes}
             id={id}
-            required
+            required={required}
             name={id}
             type="text"
             onClick={toggle}
-            value={value}
-            readOnly
+            defaultValue={value}
           />
-          <KDropdownContent toggle={toggle} isOpen={isOpen}>
-            <KDatePicker onChange={onDateChange} rangeSelect={isRangeSelect} />
+          <KDropdownContent expand="sm" toggle={toggle} isOpen={isOpen}>
+            <KDatePicker
+              allowPast={allowPast}
+              onChange={onDateChange}
+              rangeSelect={isRangeSelect}
+              defaultValue={defaultDates}
+              format={format}
+            />
           </KDropdownContent>
         </KDropdownWrapper>
         {!valid && errorMessage && (

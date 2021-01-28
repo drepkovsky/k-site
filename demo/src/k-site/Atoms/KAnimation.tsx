@@ -7,7 +7,7 @@ import { animations } from "../Libs/animations";
 import { useDispatch } from "react-redux";
 import { addAnimation, removeAnimation } from "../redux/actions/act_con";
 
-interface KAnimWrapperProps {
+export interface KAnimWrapperProps {
   animCss: string;
   anim?: string | string[];
   id: string;
@@ -39,7 +39,7 @@ const KAnimationWrapper = styled.div<
   }
 `;
 
-interface KAnimationProps {
+export interface KAnimationProps {
   anim?: string | string[];
   className?: string;
 }

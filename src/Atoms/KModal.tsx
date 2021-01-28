@@ -8,11 +8,11 @@ import {
 import { KCardBody, KCardHeader, KCardFooter } from "./KCard";
 import KAnimation from "./KAnimation";
 
-interface KModalWrapperProps {
+export interface KModalWrapperProps {
   centered?: boolean;
 }
 
-interface KModalProps extends KModalWrapperProps {
+export interface KModalProps extends KModalWrapperProps {
   isOpen?: boolean;
   toggle?: () => void;
   hideOutClick?: boolean;

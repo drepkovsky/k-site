@@ -20,19 +20,19 @@ export const useForm = () => {
   return form;
 };
 
-interface FormContextProp {
+export interface FormContextProp {
   setInput: ((id: string, input: Input) => void) | null;
   setInputValue: ((id: string, value: InputValue) => void) | null;
 }
 
-interface Props {
+export interface Props {
   onOutput: (e: Result) => null;
 }
-interface Inputs {
+export interface Inputs {
   [key: string]: Input;
 }
 
-interface Input {
+export interface Input {
   name: string;
   value: InputValue;
   isValid: (e: InputValue) => boolean | ValidationResponse;
@@ -98,7 +98,7 @@ const KForm: React.FC<Props> = ({ onOutput, children }) => {
 
   //render
   return (
-    <form onSubmit={harvestForm} className="k-form ">
+    <form onSubmit={harvestForm} className="k-form">
       <FormContext.Provider value={{ setInput, setInputValue }}>
         {children}
         <Peter as="div" color="red"></Peter>

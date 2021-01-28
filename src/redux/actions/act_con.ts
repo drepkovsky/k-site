@@ -7,12 +7,12 @@ import {
   REMOVE_ANIMATION,
 } from "../types";
 
-interface MapToNavbarAction {
+export interface MapToNavbarAction {
   type: typeof MAP_TO_NAVBAR;
   payload: NavProps;
 }
 
-interface NavProps {
+export interface NavProps {
   [key: string]: {
     name: string;
     route: string;
@@ -33,7 +33,7 @@ export type ContextAction =
   | AddAnimationAction
   | MapToNavbarAction;
 
-interface InitAnimationListenerAction {
+export interface InitAnimationListenerAction {
   type: typeof INIT_ANIM_LISTENER;
   payload: IntersectionObserver;
 }
@@ -68,12 +68,12 @@ export const initAnimListener = () => (
   });
 };
 
-interface AddAnimationAction {
+export interface AddAnimationAction {
   type: typeof ADD_ANIMATION;
   payload: { id: string; anim: string };
 }
 
-interface AddAnimationProps {
+export interface AddAnimationProps {
   ref: Element;
   id: string;
   anim: string;
@@ -90,7 +90,7 @@ export const addAnimation = ({ ref, id, anim }: AddAnimationProps) => (
   });
 };
 
-interface RemoveAnimationAction {
+export interface RemoveAnimationAction {
   type: typeof REMOVE_ANIMATION;
   payload: { id: string };
 }

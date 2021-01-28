@@ -25,7 +25,7 @@ const defaultSizes = {
   xl: 3,
 };
 
-interface KGalleryProps {
+export interface KGalleryProps {
   images: GalleryImage[];
   xs?: number;
   sm?: number;

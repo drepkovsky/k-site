@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
 // React
-import PropTypes from "prop-types";
 import React, { Fragment, useEffect, useState } from "react";
 
 // Reactstrap
@@ -32,7 +31,7 @@ const NavCollapse = styled.div<KStatefulComponentProps>`
   ${component}
 `;
 
-interface KNavbarCollapseProps {
+export interface KNavbarCollapseProps {
   isOpen?: boolean;
 }
 
@@ -107,7 +106,7 @@ export const KNavbarBrand = styled.a<KStatefulComponentProps>`
   ${component}
 `;
 
-interface KNavProps {
+export interface KNavProps {
   container?: boolean;
 }
 
@@ -145,7 +144,7 @@ export const KNavbarToggler = styled.button<KStatefulComponentProps>`
   ${component}
 `;
 
-interface NavbarTogglerProps {
+export interface NavbarTogglerProps {
   toggle?: () => void;
 }
 
@@ -161,7 +160,7 @@ const NavbarToggler: React.FC<KStatefulComponentProps & NavbarTogglerProps> = (
   );
 };
 
-interface KNavbarProps extends KStatefulComponentProps {
+export interface KNavbarProps extends KStatefulComponentProps {
   expand: "xs" | "sm" | "md" | "lg" | "xl";
   scrolledProps: KStatefulComponentProps;
   className: string;
@@ -237,12 +236,12 @@ export const KNavbar: React.FC<KNavbarProps> = (props) => {
   );
 };
 
-interface NavbarRootState {
+export interface NavbarRootState {
   context: {
     nav: NavSelector;
   };
 }
-interface NavSelector {
+export interface NavSelector {
   [key: string]: {
     route: string;
     name: string;
@@ -270,7 +269,7 @@ export const KNavbarAutoContent = () => {
   );
 };
 
-interface KNavbarUncontrolledProps extends KNavbarProps {
+export interface KNavbarUncontrolledProps extends KNavbarProps {
   brand: string;
   brandLink: string;
   navClassName: string;

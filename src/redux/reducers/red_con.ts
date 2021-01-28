@@ -13,7 +13,7 @@ export interface ContextState {
   animations: { [key: string]: string };
 }
 
-interface NavProps {
+export interface NavProps {
   [key: string]: {
     name: string;
     route: string;

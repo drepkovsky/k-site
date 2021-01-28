@@ -18,7 +18,7 @@ const KSectionWrapper = styled.section<KStatefulComponentProps>`
   ${component}
 `;
 
-interface KSectionProps {
+export interface KSectionProps {
   route: string;
   name: string;
   navbar: boolean;

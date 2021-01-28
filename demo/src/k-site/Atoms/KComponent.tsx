@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { component, KStatefulComponentProps } from "../Theming/KStyles";
 import { getHigherColor, getLowerColor } from "./../Theming/KThemes";
 
-const KComponent = styled.div<KStatefulComponentProps>`
+export const KComponent = styled.div<KStatefulComponentProps>`
   ${component}
 `;
 

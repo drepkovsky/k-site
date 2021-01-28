@@ -6,7 +6,7 @@ import { component, unit } from "../Theming/KStyles";
 import { KStatefulComponentProps } from "./../Theming/KStyles";
 
 ////// COMPONENT //////
-interface KIconProps {
+export interface KIconProps {
   prefix?: string;
   name?: string;
   isBrand?: boolean;
