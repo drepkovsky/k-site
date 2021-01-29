@@ -84,7 +84,8 @@ export interface KComponentProps {
     | "flex"
     | "flex-inline"
     | "table"
-    | "inline-table";
+    | "inline-table"
+    | "none";
 
   flexDir?: "row" | "row-reverse" | "column" | "column-reverse";
   justifyContent?:

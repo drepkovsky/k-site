@@ -81,6 +81,7 @@ export const KDatePicker: FC<KDatePickerProps> = (props) => {
     if (defaultValue) {
       setFrom(defaultValue[0]);
       setTo(defaultValue[1]);
+      select([defaultValue[0], defaultValue[1]]);
     }
   }, [defaultValue]);
 

@@ -6,27 +6,47 @@ import React, { useState, createContext, useContext } from "react";
 import styled from "styled-components";
 import { KStatefulComponentProps } from "../Theming/KStyles";
 import { KDatePickerOutput } from "./KDatepicker";
+import { FeedbackType } from "./KFormFeedback";
+import { InputResponseProps } from "./KInput";
 
 ////// COMPONENT //////
-const Peter = styled.h1<KStatefulComponentProps>``;
 
-const FormContext = createContext<FormContextProp>({
+const FormContext = createContext<FormContextProps>({
   setInput: null,
   setInputValue: null,
+  setFeedback: null,
 });
+export const FormFeedbackContext = createContext<FormFeedbackContextProps>({});
+
 export const useForm = () => {
   const form = useContext(FormContext);
-
   return form;
 };
 
-export interface FormContextProp {
-  setInput: ((id: string, input: Input) => void) | null;
-  setInputValue: ((id: string, value: InputValue) => void) | null;
+export interface FormFeedbackContextProps {
+  feedbackType?: FeedbackType;
+  feedbackMessage?: string;
 }
 
-export interface Props {
-  onOutput: (e: Result) => null;
+export interface FormContextProps {
+  setInput: ((id: string, input: Input) => void) | null;
+  setInputValue: ((id: string, value: InputValue) => void) | null;
+  setFeedback: ((feedback: FormFeedbackContextProps) => void) | null;
+}
+
+export type FormState = "success" | "error" | "warning";
+
+export interface FormResponseProps {
+  state?: FormState;
+  message?: string;
+}
+
+export type FormCallback = (res: FormResponseProps) => void;
+
+export interface KFormProps {
+  onSubmit: (e: Result, fn: FormCallback) => void;
+  onChange: (e: Result, fn: FormCallback) => void;
+  loadingMessage?: string;
 }
 export interface Inputs {
   [key: string]: Input;
@@ -35,27 +55,30 @@ export interface Inputs {
 export interface Input {
   name: string;
   value: InputValue;
-  isValid: (e: InputValue) => boolean | ValidationResponse;
+  setResponse: (res: InputResponseProps) => void;
   required: boolean;
 }
 
 export type ValidType = "success" | "warning" | "error";
 
-export interface ValidationResponse {
-  type: ValidType | boolean;
-  message?: string | null;
-}
-
 export type InputValue = string | KDatePickerOutput | null;
 
 interface Result {
-  [name: string]: number | string | KDatePickerOutput | null;
+  [name: string]: {
+    value: number | string | KDatePickerOutput | null;
+    setResponse: (res: InputResponseProps) => void;
+  };
 }
 
-const KForm: React.FC<Props> = ({ onOutput, children }) => {
+const KForm: React.FC<KFormProps> = ({
+  loadingMessage,
+  onSubmit,
+  onChange,
+  children,
+}) => {
   //states
   const [inputs, setInputs] = useState<Inputs>({});
-
+  const [feedback, setFeedback] = useState<FormFeedbackContextProps>({});
   //effects
 
   const setInput = (id: string, input: Input) => {
@@ -74,34 +97,59 @@ const KForm: React.FC<Props> = ({ onOutput, children }) => {
     setInputs(newInput);
   };
 
-  const harvestForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const harvestForm = async (
+    e: React.FormEvent<HTMLFormElement>,
+    type: "change" | "submit"
+  ) => {
     e.preventDefault();
 
     let result: Result = {};
-    let isValid = true;
     Object.keys(inputs).map((key) => {
       const value = inputs[key].value;
-      if (
-        (inputs[key].required &&
-          (value === null || !inputs[key].isValid(value))) ||
-        (!inputs[key].required && value && !inputs[key].isValid(value))
-      ) {
-        isValid = false;
-        return;
-      }
       const name = inputs[key].name;
-      result = { ...result, [name]: value };
+      const setResponse = inputs[key].setResponse;
+      result = { ...result, [name]: { value, setResponse } };
     });
 
-    if (onOutput && isValid) onOutput(result);
+    if (type === "submit") {
+      if (onSubmit) {
+        setFeedback({
+          feedbackType: "loading",
+          feedbackMessage: loadingMessage,
+        });
+        onSubmit(result, formCallback);
+      }
+    } else {
+      if (onChange) {
+        setFeedback({
+          feedbackType: "loading",
+          feedbackMessage: loadingMessage,
+        });
+        onChange(result, formCallback);
+      }
+    }
+  };
+
+  const formCallback: FormCallback = (res) => {
+    if (res) {
+      const tmpFeedback = {
+        feedbackType: res.state,
+        feedbackMessage: res.message,
+      };
+      setFeedback(tmpFeedback);
+    }
   };
 
   //render
   return (
-    <form onSubmit={harvestForm} className="k-form">
-      <FormContext.Provider value={{ setInput, setInputValue }}>
-        {children}
-        <Peter as="div" color="red"></Peter>
+    <form
+      onChange={(e) => harvestForm(e, "change")}
+      onSubmit={(e) => harvestForm(e, "submit")}
+      className="k-form">
+      <FormContext.Provider value={{ setInput, setInputValue, setFeedback }}>
+        <FormFeedbackContext.Provider value={{ ...feedback }}>
+          {children}
+        </FormFeedbackContext.Provider>
       </FormContext.Provider>
     </form>
   );

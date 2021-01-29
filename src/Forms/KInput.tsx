@@ -10,7 +10,7 @@ import { getFontWeight } from "../Theming/KThemes";
 import { component } from "../Theming/KStyles";
 import { Span } from "../Atoms/KComponent";
 
-import { useForm, InputValue } from "./KForm";
+import { useForm, InputValue, FormState } from "./KForm";
 import { KStatefulComponentProps } from "../Theming/KStyles";
 import { Div } from "./../Atoms/KComponent";
 import { KDropdownContent, KDropdownWrapper } from "../Atoms/KDropdown";
@@ -65,6 +65,16 @@ const KInputWrapper = styled.input.attrs((props: KStatefulComponentProps) => ({
   ${component}
 `;
 
+export interface InputResponseProps {
+  valid: boolean;
+  state?: InputState;
+  message?: string;
+  formState?: FormState;
+  formMessage?: string;
+}
+
+export type InputState = "success" | "warning" | "error";
+
 const KInputLabel = styled.label<KStatefulComponentProps>`
   font-size: 1rem;
 
@@ -84,15 +94,14 @@ export interface KInputCommonProps extends KStatefulComponentProps {
   labelClassName?: string;
   label?: string;
   name: string;
-  errorMessage?: string;
   required: boolean;
   disabled?: boolean;
-  validation?: (e: InputValue) => boolean;
 }
 
 export interface KInputProps extends KInputCommonProps {
   type: string;
   readOnly: boolean;
+  onChange: (val: string | number, fn: InputCallback) => void;
 }
 
 export const KInput: FC<
@@ -103,39 +112,52 @@ export const KInput: FC<
     labelClassName,
     name,
     label,
-    errorMessage,
-    validation,
     className,
     required,
+    onChange,
   } = props;
+  const ref = useRef<HTMLInputElement>(null);
 
   const [id, setId] = useState("");
-  const [valid, setValid] = useState(true);
   const [value, setValue] = useState("");
-  const ref = useRef<HTMLInputElement>(null);
-  const { setInput, setInputValue } = useForm();
 
-  const isValid = (value: InputValue) => {
-    let response = true;
-    if (validation) {
-      response = validation(value);
-    }
-    setValid(response);
-    return response;
-  };
+  const { setInput, setInputValue, setFeedback } = useForm();
+
+  const [valid, setValid] = useState(true);
+  const [message, setMessage] = useState<string | undefined>("");
+  const [state, setState] = useState<InputState | undefined>();
 
   useEffect(() => {
     const tmpId = randStr(12, false);
     setId(tmpId);
-    if (setInput) setInput(tmpId, { isValid, value, name, required });
+    if (setInput) setInput(tmpId, { setResponse, value, name, required });
   }, []);
 
-  const classes = `${className} ${!valid ? "error" : ""}`;
+  const setResponse = (res: InputResponseProps) => {
+    setValid(res.valid);
+    setMessage(res.message);
+    setState(res.state);
+  };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const classes = `${className} ${state ? state : ""}`;
+
+  const onChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target) {
       setValue(e.target.value);
       if (setInputValue) setInputValue(id, e.target.value || null);
+    }
+
+    if (onChange) onChange(e.target.value, inputCallback);
+  };
+
+  const inputCallback: InputCallback = (res) => {
+    if (res) {
+      const tmpFeedback = {
+        feedbackType: res.formState,
+        feedbackMessage: res.formMessage,
+      };
+      if (setFeedback) setFeedback(tmpFeedback);
+      setValid(res.valid);
     }
   };
 
@@ -158,10 +180,10 @@ export const KInput: FC<
           className={classes}
           id={id}
           name={id}
-          onChange={onChange}></KInputWrapper>
-        {!valid && errorMessage && (
+          onChange={onChanged}></KInputWrapper>
+        {!valid && message && (
           <Span ml="2px" fontSize="0.9" lineHeight="1.5" color="error">
-            {errorMessage}
+            {message}
           </Span>
         )}
       </Div>
@@ -174,7 +196,10 @@ interface KInputDateProps extends KInputCommonProps {
   isRangeSelect?: boolean;
   allowPast?: boolean;
   format?: string;
+  onDateChange?: (e: KDatePickerOutput, fn: InputCallback) => void;
 }
+
+export type InputCallback = (res: InputResponseProps) => void;
 
 export const KInputDate: FC<
   KInputDateProps & React.HTMLAttributes<HTMLInputElement>
@@ -184,35 +209,45 @@ export const KInputDate: FC<
     labelClassName,
     name,
     label,
-    errorMessage,
-    validation,
     className,
     required,
     isRangeSelect,
     allowPast,
     defaultValue,
     format = "yyyy/MM/dd",
+    onDateChange,
   } = props;
 
   const [id, setId] = useState("");
-  const [valid, setValid] = useState(true);
   const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState<string | undefined>();
   const [rawValue, setRawValue] = useState<KDatePickerOutput>();
   const [defaultDates, setDefaultDates] = useState<Date[] | undefined>();
 
   const ref = useRef<HTMLInputElement>(null);
-  const { setInput, setInputValue } = useForm();
+  const { setInput, setInputValue, setFeedback } = useForm();
 
-  const isValid = (date: InputValue) => {
-    let response = true;
+  const [valid, setValid] = useState(true);
+  const [message, setMessage] = useState<string | undefined>("");
+  const [state, setState] = useState<InputState | undefined>();
 
-    if (validation) response = validation(date);
+  useEffect(() => {
+    const tmpId = randStr(12, false);
+    setId(tmpId);
+    if (setInput)
+      setInput(tmpId, { setResponse, value: value || null, name, required });
+  }, []);
 
-    setValid(response);
-    return response;
+  const setResponse = (res: InputResponseProps) => {
+    setValid(res.valid);
+    setMessage(res.message);
+    setState(res.state);
+    const tmpFeedback = {
+      feedbackType: res.formState,
+      feedbackMessage: res.formMessage,
+    };
+    if (setFeedback) setFeedback(tmpFeedback);
   };
-
   useEffect(() => {
     if (typeof defaultValue === "string") {
       const dateStrings = defaultValue.split(" - ");
@@ -232,16 +267,9 @@ export const KInputDate: FC<
     setOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const tmpId = randStr(12, false);
-    setId(tmpId);
-    if (setInput)
-      setInput(tmpId, { isValid, required, value: rawValue || null, name });
-  }, []);
+  const classes = `${className} ${state ? state : ""}`;
 
-  const classes = `${className || ""} ${!valid ? "error" : ""}`;
-
-  const onDateChange = (e: KDatePickerOutput) => {
+  const onDateChanged = (e: KDatePickerOutput) => {
     let val = "";
 
     for (let i = 0; i < e.length; i++) {
@@ -253,6 +281,14 @@ export const KInputDate: FC<
     setRawValue(e);
     if (setInputValue) setInputValue(id, e || null);
     setValue(val || undefined);
+
+    if (onDateChange) onDateChange(e, inputCallback);
+  };
+
+  const inputCallback: InputCallback = (res) => {
+    if (res) {
+      setResponse(res);
+    }
   };
 
   const result = (
@@ -279,20 +315,25 @@ export const KInputDate: FC<
             type="text"
             onClick={toggle}
             defaultValue={value}
+            readOnly
           />
           <KDropdownContent expand="sm" toggle={toggle} isOpen={isOpen}>
             <KDatePicker
               allowPast={allowPast}
-              onChange={onDateChange}
+              onChange={onDateChanged}
               rangeSelect={isRangeSelect}
               defaultValue={defaultDates}
               format={format}
             />
           </KDropdownContent>
         </KDropdownWrapper>
-        {!valid && errorMessage && (
-          <Span ml="2px" fontSize="co.9" lineHeight="1.5" color="error">
-            {errorMessage}
+        {!valid && message && (
+          <Span
+            ml="2px"
+            fontSize="0.9"
+            lineHeight="1.5"
+            color={state || "error"}>
+            {message}
           </Span>
         )}
       </Div>

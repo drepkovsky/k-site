@@ -17,6 +17,7 @@ export * from "./Forms/KDatepicker";
 ///FORMS
 export { default as KForm } from "./Forms/KForm";
 export * from "./Forms/KInput";
+export * from "./Forms/KFormFeedback";
 
 ///GALLERY
 export { default as KGallery } from "./Gallery/KGallery";
