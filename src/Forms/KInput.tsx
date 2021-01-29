@@ -216,6 +216,7 @@ export const KInputDate: FC<
     defaultValue,
     format = "yyyy/MM/dd",
     onDateChange,
+    ...wrapperProps
   } = props;
 
   const [id, setId] = useState("");
@@ -257,8 +258,6 @@ export const KInputDate: FC<
         dates.push(date);
       });
       setValue(defaultValue);
-      console.log(dateStrings);
-      console.log(dates);
       setDefaultDates(dates);
     }
   }, [defaultValue]);
@@ -272,10 +271,12 @@ export const KInputDate: FC<
   const onDateChanged = (e: KDatePickerOutput) => {
     let val = "";
 
-    for (let i = 0; i < e.length; i++) {
-      if (e[i]) {
-        if (i === 1) val += " - ";
-        val += formatFunc(e[i], format);
+    if (e) {
+      for (let i = 0; i < e.length; i++) {
+        if (e[i]) {
+          if (i === 1) val += " - ";
+          val += formatFunc(e[i], format);
+        }
       }
     }
     setRawValue(e);
@@ -288,6 +289,14 @@ export const KInputDate: FC<
   const inputCallback: InputCallback = (res) => {
     if (res) {
       setResponse(res);
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const key = e.key;
+
+    if (key === "Backspace" || key === "Delete") {
+      setDefaultDates(undefined);
     }
   };
 
@@ -307,7 +316,7 @@ export const KInputDate: FC<
         <KDropdownWrapper>
           <KInputWrapper
             ref={ref}
-            {...props}
+            {...wrapperProps}
             className={classes}
             id={id}
             required={required}
@@ -316,6 +325,7 @@ export const KInputDate: FC<
             onClick={toggle}
             defaultValue={value}
             readOnly
+            onKeyDown={onKeyDown}
           />
           <KDropdownContent expand="sm" toggle={toggle} isOpen={isOpen}>
             <KDatePicker

@@ -70,7 +70,7 @@ export interface KDatePickerProps {
   format?: string;
 }
 
-export type KDatePickerOutput = Date[];
+export type KDatePickerOutput = Date[] | null;
 
 export const KDatePicker: FC<KDatePickerProps> = (props) => {
   const { rangeSelect, onChange, allowPast, defaultValue } = props;
@@ -82,6 +82,10 @@ export const KDatePicker: FC<KDatePickerProps> = (props) => {
       setFrom(defaultValue[0]);
       setTo(defaultValue[1]);
       select([defaultValue[0], defaultValue[1]]);
+    } else {
+      setFrom(undefined);
+      setTo(undefined);
+      select(null);
     }
   }, [defaultValue]);
 
