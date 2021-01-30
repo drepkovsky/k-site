@@ -1,0 +1,46 @@
+{
+  "folders": [
+    ["new\\interier", [15, 0], [15, 0], []],
+    ["new\\exterier", [11, 0], [11, 0], []],
+    ["new\\okolie", [10, 0], [10, 0], []],
+    ["new", [6, 0], [42, 0], ["new\\interier", "new\\exterier", "new\\okolie"]]
+  ],
+  "tree": {
+    "children": [
+      {
+        "path": "new\\interier",
+        "totalImages": 15,
+        "totalFiles": 0,
+        "herenew": 15,
+        "hereFiles": 0,
+        "tags": ["I:", "drepkovsky", "cerenka", "public", "new", "interier"],
+        "keytag": "interier"
+      },
+      {
+        "path": "new\\exterier",
+        "totalImages": 11,
+        "totalFiles": 0,
+        "herenew": 11,
+        "hereFiles": 0,
+        "tags": ["I:", "drepkovsky", "cerenka", "public", "new", "exterier"],
+        "keytag": "exterier"
+      },
+      {
+        "path": "new\\okolie",
+        "totalImages": 10,
+        "totalFiles": 0,
+        "herenew": 10,
+        "hereFiles": 0,
+        "tags": ["I:", "drepkovsky", "cerenka", "public", "new", "okolie"],
+        "keytag": "okolie"
+      }
+    ],
+    "path": "new",
+    "totalnew": 42,
+    "totalFiles": 0,
+    "herenew": 6,
+    "hereFiles": 0,
+    "tags": ["I:", "drepkovsky", "cerenka", "public", "new"],
+    "keytag": "new"
+  }
+}

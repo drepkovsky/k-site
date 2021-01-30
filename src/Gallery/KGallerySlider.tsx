@@ -6,6 +6,7 @@ import React, { FC, useState, useEffect } from "react";
 
 // Reactstrap
 import KButton from "../Atoms/KButton";
+import { Div } from "../Atoms/KComponent";
 import KIcon from "../Atoms/KIcon";
 import { KLazyImage } from "../Atoms/KImage";
 import { KModal } from "../Atoms/KModal";
@@ -126,8 +127,15 @@ export const KGallerySlider: FC<KGallerySliderProps> = (props) => {
 
   const imageBody = () => {
     return (
-      <div className="k-gallery-img-slider-holder">
-        <KLazyImage src={images[currentIndex]?.src} className="k-slider-img " />
+      <Div position="relative" w="100" h="100">
+        <KLazyImage
+          src={images[currentIndex]?.src}
+          position="relative"
+          left="0"
+          top="0"
+          w="100"
+          h="100"
+        />
         <KButton
           border={false}
           bg="#00000080"
@@ -176,7 +184,7 @@ export const KGallerySlider: FC<KGallerySliderProps> = (props) => {
           onClick={next}>
           <KIcon size={1.5} name="chevron-right" prefix="fa" />
         </KButton>
-      </div>
+      </Div>
     );
   };
 
@@ -212,18 +220,15 @@ export const KGallerySlider: FC<KGallerySliderProps> = (props) => {
           bodyProps={{ position: "relative", w: 100, h: 100 }}
           isOpen={isModalOpen}
           centered={true}>
-          <div
-            style={{
-              maxWidth: imgWidth || "100%",
-              maxHeight: imgHeight || "100%",
-              width: imgWidth || "100%",
-              height: imgHeight || "100%",
-              left: left || 0,
-              top: top || 0,
-            }}
-            className="">
+          <Div
+            maxW={`${imgWidth}px` || "100"}
+            maxH={`${imgHeight}px` || "100"}
+            w={`${imgWidth}px` || "100"}
+            h={`${imgHeight}px` || "100"}
+            left={left || 0}
+            top={left || 0}>
             {imageBody()}
-          </div>
+          </Div>
         </KModal>
       );
     };

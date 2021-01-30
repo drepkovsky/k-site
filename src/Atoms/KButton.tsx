@@ -23,6 +23,7 @@ const KButton = styled.button.attrs(
   justify-content: center;
 
   &:hover {
+    pointer-events: pointer;
     outline: none;
     color: ${({ bg }) => getContrast(bg)};
     background-color: ${({ bg, theme }) => getLowerColor(bg, theme)};
@@ -36,6 +37,13 @@ const KButton = styled.button.attrs(
   &:focus {
     outline: none;
   }
+
+  &:disabled,
+  [disabled] {
+    filter: grayscale(80%);
+    pointer-events: none;
+  }
+
   ${component}
 
   color: ${({ bg, outlined }) => (outlined ? bg : getContrast(bg))};

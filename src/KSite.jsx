@@ -20,10 +20,15 @@ import { mapToNavbar, initAnimListener } from "./redux/actions/act_con";
 import { useTheme } from "./Theming/KThemes";
 import { uuidv4 } from "./Libs/KLib";
 
-import { Display1, Display2, Display3, Display4 } from "./Atoms/KComponent";
+import {
+  Display1,
+  Display2,
+  Display3,
+  Display4,
+  Div,
+} from "./Atoms/KComponent";
 
 //STYLE
-import "./index.css";
 
 const GlobalStyles = createGlobalStyle`
   html {
@@ -123,6 +128,8 @@ function KSiteBody(props) {
   const [pages, setPages] = useState([]);
   const [theme, setTheme] = useState();
 
+  const [fontLoaded, setFontLoaded] = useState(false);
+
   useEffect(() => {
     props.initAnimListener();
   }, []);
@@ -137,6 +144,12 @@ function KSiteBody(props) {
     WebFont.load({
       google: {
         families: getFonts(),
+      },
+      loading: () => {
+        setFontLoaded(false);
+      },
+      fontloading: () => {
+        setFontLoaded(true);
       },
     });
   }, [optionalColors, accentColor]);
@@ -188,7 +201,7 @@ function KSiteBody(props) {
     );
   }
 
-  if (theme)
+  if (theme && fontLoaded)
     return (
       <ThemeProvider theme={theme}>
         <GlobalStyles />

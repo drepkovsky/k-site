@@ -28,7 +28,7 @@ export interface KComponentProps {
   color?: string;
   bg?: string;
   borderColor?: string;
-  opacity?: number;
+  opacity?: number | string;
 
   bgImg?: string | string[];
   bgPosition?: string;
@@ -116,6 +116,40 @@ export interface KComponentProps {
 
   position?: "relative" | "absolute" | "sticky" | "fixed" | "static";
   zIndex?: string | number;
+  cursor?:
+    | "auto"
+    | "default"
+    | "none"
+    | "pointer"
+    | "progress"
+    | "wait"
+    | "crosshair"
+    | "text"
+    | "vertical-text"
+    | "alias"
+    | "copy"
+    | "move"
+    | "no-drop"
+    | "not-allowed"
+    | "e-resize"
+    | "n-resize"
+    | "ne-resize"
+    | "nw-resize"
+    | "s-resize"
+    | "se-resize"
+    | "sw-resize"
+    | "w-resize"
+    | "ew-resize"
+    | "ns-resize"
+    | "nesw-resize"
+    | "nwse-resize"
+    | "col-resize"
+    | "row-resize"
+    | "all-scroll"
+    | "zoom-in"
+    | "zoom-out"
+    | "grab"
+    | "grabbing";
 }
 
 export interface KResponsiveComponentProps extends KComponentProps {
@@ -188,7 +222,7 @@ const properties = (props: KComponentProps) => {
     props
   )} ${lineH(props)} ${flex(props)} ${positionStyle(props)} ${zIndexStyle(
     props
-  )} ${opacityStyle(props)} ${transitionStyle(props)}
+  )} ${opacityStyle(props)} ${transitionStyle(props)} ${cursorStyle(props)}
   `;
 };
 
@@ -481,7 +515,7 @@ const margin = ({ ml, mr, mt, mb, mx, my, m }: KComponentProps) => {
     else result += `margin-top: ${unit(my, "rem")};`;
   }
   if (mb || my) {
-    if (mr) result += `margin-bottom: ${unit(mb, "rem")};`;
+    if (mb) result += `margin-bottom: ${unit(mb, "rem")};`;
     else result += `margin-bottom: ${unit(my, "rem")};`;
   }
 
@@ -566,5 +600,10 @@ const zIndexStyle = ({ zIndex }: KComponentProps) => {
 
 const opacityStyle = ({ opacity }: KComponentProps) => {
   if (opacity) return `opacity:${opacity};`;
+  return "";
+};
+
+const cursorStyle = ({ cursor }: KComponentProps) => {
+  if (cursor) return `cursor:${cursor};`;
   return "";
 };

@@ -98,12 +98,16 @@ const KGallery: FC<KGalleryProps> = (props) => {
     return (
       <KLazyImage
         alt={image.description}
-        className="k-gallery-img "
+        w="100"
+        maxW="100"
+        transition="all 0.1s ease-in-out"
+        opacity="1"
+        objFit="cover"
         src={image.thumbnailSrc || image.src}
-        style={{
-          objectFit: "cover",
-          width: "100%",
-          maxHeight: maxImgHeight,
+        maxH={`${maxImgHeight}`}
+        hover={{
+          opacity: "0.6",
+          cursor: "pointer",
         }}
         onClick={() => {
           setClickedImageIndex(index);

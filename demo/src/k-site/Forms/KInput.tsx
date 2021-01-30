@@ -119,7 +119,7 @@ export const KInput: FC<
   const ref = useRef<HTMLInputElement>(null);
 
   const [id, setId] = useState("");
-  const [value, setValue] = useState("");
+  const [val, setValue] = useState("");
 
   const { setInput, setInputValue, setFeedback } = useForm();
 
@@ -130,7 +130,7 @@ export const KInput: FC<
   useEffect(() => {
     const tmpId = randStr(12, false);
     setId(tmpId);
-    if (setInput) setInput(tmpId, { setResponse, value, name, required });
+    if (setInput) setInput(tmpId, { setResponse, value: val, name, required });
   }, []);
 
   const setResponse = (res: InputResponseProps) => {

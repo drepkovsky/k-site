@@ -1,6 +1,6 @@
 {
   "name": "@drepkovsky/k-site",
-  "version": "1.2.4",
+  "version": "1.2.6",
   "description": "KSite is a react, bootstrap-like component library, build upon styled-components.",
   "main": "index.js",
   "types": "index.d.ts",
