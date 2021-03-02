@@ -226,7 +226,7 @@ export const KGallerySlider: FC<KGallerySliderProps> = (props) => {
             w={`${imgWidth}px` || "100"}
             h={`${imgHeight}px` || "100"}
             left={left || 0}
-            top={left || 0}>
+            top={top || 0}>
             {imageBody()}
           </Div>
         </KModal>

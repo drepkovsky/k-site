@@ -20,7 +20,7 @@ export * from "./Forms/KInput";
 export * from "./Forms/KFormFeedback";
 
 ///GALLERY
-export { default as KGallery } from "./Gallery/KGallery";
+export * from "./Gallery/KGallery";
 export * from "./Gallery/KGallerySlider";
 
 ///HERO

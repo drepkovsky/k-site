@@ -38,7 +38,7 @@ export interface KGalleryProps {
   maxImgHeight?: number;
 }
 
-const KGallery: FC<KGalleryProps> = (props) => {
+export const KGallery: FC<KGalleryProps> = (props) => {
   //props
   const {
     images,
@@ -182,6 +182,3 @@ const KGallery: FC<KGalleryProps> = (props) => {
     </Fragment>
   );
 };
-
-////// EXPORTS //////
-export default KGallery;

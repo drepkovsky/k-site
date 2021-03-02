@@ -13,6 +13,8 @@ import {
   KPage,
   KHero,
   KHeroBody,
+  Display2,
+  Display4,
 } from "./k-site";
 import { Fragment } from "react";
 
@@ -24,7 +26,7 @@ function App() {
           <KNavbarUncontrolled
             bg="transparent"
             position="fixed"
-            brand="Check"
+            brand="K-site"
             brandLink="/"
             color="grey-10"
             expand="sm"
@@ -37,14 +39,7 @@ function App() {
 
           {/* Main Hero */}
           <KSection p="0" lineHeight="2">
-            <KHero
-              bgImg="images/mainHero.jpg"
-              bgPosition="50% 50%"
-              bgSize="cover"
-              text="center"
-              color="grey-10"
-              size="fullheight"
-              zIndex="10">
+            <KHero text="center" color="grey-10" size="fullheight" zIndex="10">
               <KHeroBody>
                 <Overlay />
                 <KContainer>
@@ -53,6 +48,11 @@ function App() {
                       anim={["fadeIn 2s ease", "up 0.5s ease"]}
                       overflow="visible">
                       <Display1>Welcome</Display1>
+                    </KAnimation>
+                    <KAnimation
+                      anim={["fadeIn 2s ease", "up 0.5s ease"]}
+                      overflow="visible">
+                      <Display4>Demo coming soon</Display4>
                     </KAnimation>
                     <KRow>
                       <KCol lg={{ size: 4, offset: 4 }}></KCol>
