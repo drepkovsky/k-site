@@ -1,6 +1,6 @@
 # k-site
 
-KSite is a react, bootstrap-like component library used for an easier static page creation.
+KSite is a modular, react component library used for an easier static page creation.
 KSite was build upon styled-components library.
 
 ## Install
