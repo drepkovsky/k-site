@@ -222,7 +222,6 @@ export const KInputDate: FC<
   const [id, setId] = useState("");
   const [isOpen, setOpen] = useState(false);
   const [value, setValue] = useState<string | undefined>();
-  const [rawValue, setRawValue] = useState<KDatePickerOutput>();
   const [defaultDates, setDefaultDates] = useState<Date[] | undefined>();
 
   const ref = useRef<HTMLInputElement>(null);
@@ -279,7 +278,6 @@ export const KInputDate: FC<
         }
       }
     }
-    setRawValue(e);
     if (setInputValue) setInputValue(id, e || null);
     setValue(val || undefined);
 
