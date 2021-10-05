@@ -24,43 +24,17 @@ export interface KTheme {
   radius: string;
 }
 
-export const useTheme = () => {
-  const [theme, setTheme] = useState<KTheme>(themeDefault);
-
-  const getFonts = () => {
-    const allFonts = theme.font.split(", ");
-    for (let i = 0; i < allFonts.length; i++) {
-      allFonts[i] += ":";
-      Object.keys(theme.weights).map((key, index) => {
-        allFonts[i] += theme.weights[key];
-        if (index < Object.keys(theme.weights).length - 1) allFonts[i] += ",";
-      });
-    }
-    return allFonts;
-  };
-
-  const getTheme = (
-    accentColor: string,
-    optionalColors: { [key: string]: string }
-  ) => {
-    if (accentColor || optionalColors) {
-      const tmpTheme = themeDefault;
-      tmpTheme.colors = generateTheme(accentColor, optionalColors);
-      return tmpTheme;
-    } else return theme;
-  };
-
-  const setMainTheme = (
-    accentColor: string,
-    optionalColors: { [key: string]: string }
-  ) => {
-    const tmpTheme = getTheme(accentColor, optionalColors);
-    setTheme(tmpTheme);
-    return tmpTheme;
-  };
-
-  return { theme, getTheme, setMainTheme, getFonts };
+export const getTheme = (
+  accentColor = "#131722",
+  optionalColors = {}
+) => {
+  const tmpTheme = themeDefault;
+  if (accentColor || optionalColors) 
+    tmpTheme.colors = generateTheme(accentColor, optionalColors);
+  return tmpTheme;
 };
+
+
 
 export const getColor = (color?: string, theme?: KTheme) => {
   if (color && theme) {

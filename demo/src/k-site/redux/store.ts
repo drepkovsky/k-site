@@ -14,6 +14,6 @@ const composeArguments = [applyMiddleware(...middleware)];
 // );
 // }
 
-const store = createStore(index, initialState, compose(...composeArguments));
+const store:any = createStore(index, initialState, compose(...composeArguments));
 
 export default store;

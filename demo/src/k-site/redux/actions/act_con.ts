@@ -3,14 +3,9 @@ import { RootState } from "../reducers";
 import {
   ADD_ANIMATION,
   INIT_ANIM_LISTENER,
-  MAP_TO_NAVBAR,
   REMOVE_ANIMATION,
 } from "../types";
 
-export interface MapToNavbarAction {
-  type: typeof MAP_TO_NAVBAR;
-  payload: NavProps;
-}
 
 export interface NavProps {
   [key: string]: {
@@ -18,20 +13,11 @@ export interface NavProps {
     route: string;
   };
 }
-export const mapToNavbar = (nav: NavProps) => (
-  dispatch: Dispatch<MapToNavbarAction>
-) => {
-  dispatch({
-    type: MAP_TO_NAVBAR,
-    payload: nav,
-  });
-};
 
 export type ContextAction =
   | InitAnimationListenerAction
   | RemoveAnimationAction
-  | AddAnimationAction
-  | MapToNavbarAction;
+  | AddAnimationAction;
 
 export interface InitAnimationListenerAction {
   type: typeof INIT_ANIM_LISTENER;

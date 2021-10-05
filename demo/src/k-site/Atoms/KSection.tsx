@@ -18,30 +18,14 @@ const KSectionWrapper = styled.section<KStatefulComponentProps>`
   ${component}
 `;
 
-export interface KSectionProps {
-  route: string;
-  name: string;
-  navbar: boolean;
-}
 
-const KSection: React.FC<KStatefulComponentProps & KSectionProps> = (props) => {
-  const { className, children, route } = props;
+const KSection: React.FC<KStatefulComponentProps> = (props) => {
+  const { className, children} = props;
 
-  const [id, setId] = useState("");
-
-  useEffect(() => {
-    if (route) {
-      let tmpId: string | string[] = route.split("/");
-      tmpId = tmpId[tmpId.length - 1].split("#");
-      tmpId = tmpId[tmpId.length - 1];
-      setId(tmpId);
-    }
-  }, []);
 
   return (
     <KSectionWrapper
       {...props}
-      id={id}
       className={`k-section ${className || ""}`}>
       {children}
     </KSectionWrapper>

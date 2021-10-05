@@ -1,18 +1,29 @@
 ////// IMPORTS //////
 // React
-import React from "react";
+import React, { ReactNode, useEffect } from "react";
+import { useKSiteRoute } from "../KSite";
 
 ////// COMPONENT //////
 
 export interface KPageProps {
   route: string;
-  name: string;
-  navbar: boolean;
   className: string;
 }
 
-const KPage: React.FC<KPageProps> = (props) => {
-  return <div className={`${props.className || ""}`}>{props.children}</div>;
+const KPage: React.FC<KPageProps> = ({children,route,className}) => {
+
+  const {pages,setPages} = useKSiteRoute();
+
+  const result : ReactNode = [<div className={`${className || ""}`}>{children}</div>];
+
+
+  useEffect(()=>{
+    if(setPages)
+      setPages({...pages,[route]:result});
+  },[route]);
+
+
+  return null;
 };
 
 /////EXPORT///////////////

@@ -1,21 +1,20 @@
 ////// IMPORTS //////
 
 //// EXTERNAL ////
-import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
 // React
-import React, { Fragment, useEffect, useState } from "react";
+import React, {  createContext, useContext, useEffect, useState } from "react";
 
 // Reactstrap
 
-import KIcon from "../Atoms/KIcon";
 import {
   component,
   bootstrapQueryMin,
   KStatefulComponentProps,
 } from "../Theming/KStyles";
 import { KContainerCss } from "../Atoms/KContainer";
+import KIcon from "../Atoms/KIcon";
 ////// COMPONENT //////
 
 const NavCollapse = styled.div<KStatefulComponentProps>`
@@ -38,7 +37,8 @@ export interface KNavbarCollapseProps {
 export const KNavbarCollapse: React.FC<
   KStatefulComponentProps & KNavbarCollapseProps
 > = (props) => {
-  const { isOpen, children } = props;
+  const { children,} = props;
+  const {isOpen} = useNavbar();
 
   const show = isOpen ? "show" : "";
 
@@ -146,16 +146,26 @@ export const KNavbarToggler = styled.button<KStatefulComponentProps>`
 
 export interface NavbarTogglerProps {
   toggle?: () => void;
+  isOpen?:boolean,
 }
 
-const NavbarToggler: React.FC<KStatefulComponentProps & NavbarTogglerProps> = (
+export const NavbarToggler: React.FC<KStatefulComponentProps & NavbarTogglerProps> = (
   props
 ) => {
-  const { toggle = () => {}, color, bg, children } = props;
+  const { color, bg } = props;
+
+  const {isOpen,setOpen} = useNavbar();
+
+  const iconName = isOpen ? "times":"menu";
+
+  const onClick = ()=> {
+    if(setOpen)
+    setOpen(!isOpen);
+  }
 
   return (
-    <KNavbarToggler onClick={toggle} bg={bg} color={color}>
-      {children}
+    <KNavbarToggler onClick={onClick} bg={bg} color={color}>
+      <KIcon prefix="fa" name={iconName} />
     </KNavbarToggler>
   );
 };
@@ -216,10 +226,16 @@ const Navbar = styled.div<KNavbarProps>`
   ${component}
 `;
 
+const KNavbarContext = createContext<{isScrolled:boolean,isOpen:boolean,setOpen:((isOpen:boolean)=>void)|null}>({isOpen:false,isScrolled:false,setOpen:null});
+const useNavbar = ()=>{
+  return useContext(KNavbarContext);
+}
+
 export const KNavbar: React.FC<KNavbarProps> = (props) => {
   const { children, scrolledProps, position } = props;
 
   const [isScrolled, setScrolled] = useState(false);
+  const [isOpen,setOpen] = useState(false);
 
   const updateScroll = () => {
     setScrolled(window.pageYOffset > 10);
@@ -230,90 +246,11 @@ export const KNavbar: React.FC<KNavbarProps> = (props) => {
   }, [position]);
 
   return (
+
     <Navbar {...props} {...(isScrolled && scrolledProps)}>
+      <KNavbarContext.Provider value={{isOpen,isScrolled,setOpen}}>
       {children}
+      </KNavbarContext.Provider>
     </Navbar>
-  );
-};
-
-export interface NavbarRootState {
-  context: {
-    nav: NavSelector;
-  };
-}
-export interface NavSelector {
-  [key: string]: {
-    route: string;
-    name: string;
-  };
-}
-
-export const KNavbarAutoContent = () => {
-  const links: {
-    [key: string]: {
-      route: string;
-      name: string;
-    };
-  } = useSelector<NavbarRootState, NavSelector>((state) => state.context.nav);
-
-  return (
-    <Fragment>
-      {Object.keys(links).map((key, index) => {
-        return (
-          <KNavItem key={index}>
-            <KNavLink href={links[key].route}>{links[key].name}</KNavLink>
-          </KNavItem>
-        );
-      })}
-    </Fragment>
-  );
-};
-
-export interface KNavbarUncontrolledProps extends KNavbarProps {
-  brand: string;
-  brandLink: string;
-  navClassName: string;
-  className: string;
-  navContainer: boolean;
-}
-
-export const KNavbarUncontrolled: React.FC<KNavbarUncontrolledProps> = (
-  props
-) => {
-  //props
-  const {
-    brand,
-    brandLink,
-    navClassName,
-    navContainer = true,
-    ...knavbarProps
-  } = props;
-
-  const [isOpen, setOpen] = useState(false);
-  const toggle = () => {
-    setOpen(!isOpen);
-  };
-  //states
-
-  //effects
-  const iconName = isOpen ? "times" : "bars";
-
-  //render
-  return (
-    <KNavbar {...knavbarProps} className={`${isOpen ? "collapsed" : ""}`}>
-      <KNav container={navContainer} className={`${navClassName}`}>
-        <KNavbarBrand weight="bold" href={brandLink}>
-          {brand}
-        </KNavbarBrand>
-        <NavbarToggler toggle={toggle}>
-          <KIcon size={1.2} prefix="fa" name={iconName} />
-        </NavbarToggler>
-        <KNavbarCollapse isOpen={isOpen}>
-          <KNavItems>
-            <KNavbarAutoContent />
-          </KNavItems>
-        </KNavbarCollapse>
-      </KNav>
-    </KNavbar>
   );
 };
